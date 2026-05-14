@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { BentoGrid } from "@/components/BentoGrid";
 import { ArrowRight, Code, Smartphone, BrainCircuit, Rocket, CheckCircle2, ChevronRight, Activity, Zap, Users } from "lucide-react";
 import Link from "next/link";
 
@@ -11,7 +12,7 @@ export default function Home() {
       <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between mx-auto px-4 md:px-6">
           <div className="flex items-center gap-2">
-            <div className="bg-primary text-primary-foreground font-bold text-xl h-8 w-8 flex items-center justify-center rounded-md">
+            <div className="bg-primary text-primary-foreground font-display italic text-xl h-8 w-8 flex items-center justify-center rounded-md">
               A
             </div>
             <span className="font-semibold tracking-tight">Apargo</span>
@@ -34,8 +35,8 @@ export default function Home() {
               <div className="font-mono text-xs font-medium uppercase tracking-widest text-muted-foreground">
                 Product Engineering & AI Services
               </div>
-              <h1 className="font-sans font-bold text-5xl md:text-7xl leading-[1.1] tracking-tight">
-                We build software that growing businesses <span className="text-primary">actually use.</span>
+              <h1 className="font-display text-5xl md:text-7xl leading-[1.1] tracking-tight">
+                We build software that growing businesses <i className="text-primary font-display font-normal">actually use.</i>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
                 From custom platforms and mobile apps to in-house SaaS products like AI Greentick — Apargo is the engineering partner founders call when they want to ship fast, scale safely and stay technical.
@@ -58,45 +59,14 @@ export default function Home() {
             </p>
             <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-60 grayscale">
               {['Acme Corp', 'Globex', 'Soylent', 'Initech', 'Massive Dynamic'].map((company) => (
-                <div key={company} className="font-sans font-bold text-2xl">{company}</div>
+                <div key={company} className="font-display italic text-2xl font-bold">{company}</div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* FOUR WAYS WE HELP YOU SHIP */}
-        <section className="py-24 border-b">
-          <div className="container px-4 md:px-6 mx-auto">
-            <div className="mb-12">
-              <h2 className="font-sans font-bold text-4xl md:text-5xl mb-4">Four ways we help you ship</h2>
-              <p className="text-lg text-muted-foreground max-w-2xl">
-                Whether you need one project delivered or a long-term engineering partner, we slot into your workflow.
-              </p>
-            </div>
-            
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-              {[
-                { title: "Custom Product Development", icon: Code, desc: "Web platforms, dashboards, admin panels, internal tools. Built from scratch on a modern stack and handed over with full code ownership.", link: "Explore Custom Software" },
-                { title: "Mobile Apps", icon: Smartphone, desc: "iOS and Android apps using React Native and Flutter, or fully native when you need it. Push notifications, offline-first, payments.", link: "Explore Mobile App Development" },
-                { title: "AI & Automation", icon: BrainCircuit, desc: "Chatbots, document AI, recommendation engines, workflow automation. We use LLMs where they save real time and money.", link: "Explore AI Services" },
-                { title: "SaaS Products", icon: Rocket, desc: "We don't just build for clients. We build, run and scale our own SaaS. The team you hire actually runs the production playbook.", link: "See Our Products" }
-              ].map((service, i) => (
-                <Card key={i} className="group hover:bg-muted/50 transition-colors border-border/50">
-                  <CardHeader>
-                    <service.icon className="h-10 w-10 text-primary mb-4" />
-                    <CardTitle className="text-xl">{service.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="flex flex-col gap-4 h-[calc(100%-8rem)] justify-between">
-                    <p className="text-muted-foreground text-sm leading-relaxed">{service.desc}</p>
-                    <Link href="#" className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 group-hover:underline">
-                      {service.link} <ChevronRight className="ml-1 h-4 w-4" />
-                    </Link>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* FOUR WAYS WE HELP YOU SHIP - BENTO GRID */}
+        <BentoGrid />
 
         {/* FEATURED PRODUCT - AI GREENTICK */}
         <section className="py-24 border-b bg-card">
@@ -106,7 +76,7 @@ export default function Home() {
                 <div className="font-mono text-xs font-medium uppercase tracking-widest text-muted-foreground mb-4">
                   From the Apargo Lab
                 </div>
-                <h2 className="font-sans font-bold text-4xl md:text-5xl mb-6">
+                <h2 className="font-display italic text-4xl md:text-5xl mb-6 font-normal">
                   AI Greentick — the WhatsApp marketing suite we built for modern teams
                 </h2>
                 <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
@@ -115,15 +85,15 @@ export default function Home() {
                 
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
                   <div>
-                    <div className="text-3xl font-sans font-bold text-primary mb-1">3x faster</div>
+                    <div className="text-3xl font-display font-bold text-primary mb-1">3x faster</div>
                     <div className="text-sm text-muted-foreground">reply times with shared inbox</div>
                   </div>
                   <div>
-                    <div className="text-3xl font-sans font-bold text-primary mb-1">90%+</div>
+                    <div className="text-3xl font-display font-bold text-primary mb-1">90%+</div>
                     <div className="text-sm text-muted-foreground">average WhatsApp read rates</div>
                   </div>
                   <div>
-                    <div className="text-3xl font-sans font-bold text-primary mb-1">One #</div>
+                    <div className="text-3xl font-display font-bold text-primary mb-1">One #</div>
                     <div className="text-sm text-muted-foreground">unlimited team members</div>
                   </div>
                 </div>
@@ -156,7 +126,7 @@ export default function Home() {
         <section className="py-24 border-b">
           <div className="container px-4 md:px-6 mx-auto">
             <div className="mb-16 max-w-2xl mx-auto text-center">
-              <h2 className="font-sans font-bold text-4xl md:text-5xl mb-4">A simple, transparent process</h2>
+              <h2 className="font-display italic text-4xl md:text-5xl mb-4 font-normal">A simple, transparent process</h2>
               <p className="text-lg text-muted-foreground">
                 Four steps from first call to first release. No surprise invoices, no "it's almost done" energy.
               </p>
@@ -170,7 +140,7 @@ export default function Home() {
                 { step: "04", title: "Launch & Support", desc: "Code handover, deployment, training. Then a flexible support window — bug fixes, small changes, or a full retainer." }
               ].map((item, i) => (
                 <div key={i} className="relative flex flex-col gap-4">
-                  <div className="text-5xl font-sans text-muted/50 font-bold">{item.step}</div>
+                  <div className="text-5xl font-display text-muted/50 font-bold">{item.step}</div>
                   <h3 className="text-xl font-semibold">{item.title}</h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">{item.desc}</p>
                 </div>
@@ -182,7 +152,7 @@ export default function Home() {
         {/* WHY TEAMS PICK APARGO */}
         <section className="py-24 border-b bg-muted/20">
           <div className="container px-4 md:px-6 mx-auto">
-            <h2 className="font-sans font-bold text-4xl md:text-5xl mb-12">Four reasons we stick</h2>
+            <h2 className="font-display italic text-4xl md:text-5xl mb-12 font-normal">Four reasons we stick</h2>
             <div className="grid md:grid-cols-2 gap-x-12 gap-y-16">
               <div className="flex gap-4">
                 <div className="mt-1 bg-primary/10 p-2 rounded-lg h-fit"><CheckCircle2 className="h-6 w-6 text-primary" /></div>
@@ -220,7 +190,7 @@ export default function Home() {
         <section className="py-24 border-b">
           <div className="container px-4 md:px-6 mx-auto">
             <div className="mb-12">
-              <h2 className="font-sans font-bold text-4xl md:text-5xl mb-4">Built for the industries that move fast</h2>
+              <h2 className="font-display italic text-4xl md:text-5xl mb-4 font-normal">Built for the industries that move fast</h2>
               <p className="text-lg text-muted-foreground max-w-2xl">
                 E-commerce, healthcare, education, real estate, FinTech and travel — different domains, same need for software that just works.
               </p>
@@ -238,7 +208,7 @@ export default function Home() {
         {/* FINAL CTA */}
         <section className="py-32 relative overflow-hidden text-center bg-card">
           <div className="container relative z-10 px-4 md:px-6 mx-auto">
-            <h2 className="font-sans font-bold text-5xl md:text-7xl mb-6">Have a project in mind?</h2>
+            <h2 className="font-display text-5xl md:text-7xl mb-6 font-normal">Have a project in mind?</h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
               Tell us what you're building. We'll reply within one working day with honest feedback — and a clear next step, even if it's not us.
             </p>
@@ -256,7 +226,7 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-16">
             <div className="col-span-2 md:col-span-1">
               <div className="flex items-center gap-2 mb-4">
-                <div className="bg-primary text-primary-foreground font-sans font-bold h-6 w-6 flex items-center justify-center rounded-sm text-sm">A</div>
+                <div className="bg-primary text-primary-foreground font-display italic h-6 w-6 flex items-center justify-center rounded-sm text-sm">A</div>
                 <span className="font-semibold">Apargo</span>
               </div>
               <p className="text-sm text-muted-foreground">Product engineering and AI services. Builders of AI Greentick.</p>
