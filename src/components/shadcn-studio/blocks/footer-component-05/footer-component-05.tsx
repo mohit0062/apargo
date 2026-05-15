@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Mail, Phone, MapPin, Globe } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 
@@ -29,32 +30,32 @@ const Footer = () => {
         <div className='flex flex-col gap-5'>
           <div className='text-lg font-medium'>Services</div>
           <ul className='text-muted-foreground space-y-3 text-sm'>
-            <li><a href='#' className='hover:text-foreground transition-colors duration-300'>Web Development</a></li>
-            <li><a href='#' className='hover:text-foreground transition-colors duration-300'>Mobile App Development</a></li>
-            <li><a href='#' className='hover:text-foreground transition-colors duration-300'>Custom Software</a></li>
-            <li><a href='#' className='hover:text-foreground transition-colors duration-300'>AI & Machine Learning</a></li>
-            <li><a href='#' className='hover:text-foreground transition-colors duration-300'>SaaS Product Development</a></li>
-            <li><a href='#' className='hover:text-foreground transition-colors duration-300'>Cloud & DevOps</a></li>
+            <li><Link href='/services/web-development' className='hover:text-foreground transition-colors duration-300'>Web Development</Link></li>
+            <li><Link href='/services/mobile-app-development' className='hover:text-foreground transition-colors duration-300'>Mobile App Development</Link></li>
+            <li><Link href='/services/custom-software' className='hover:text-foreground transition-colors duration-300'>Custom Software</Link></li>
+            <li><Link href='/services/ai-machine-learning' className='hover:text-foreground transition-colors duration-300'>AI & Machine Learning</Link></li>
+            <li><Link href='/services/saas-product-development' className='hover:text-foreground transition-colors duration-300'>SaaS Product Development</Link></li>
+            <li><Link href='/services/cloud-devops' className='hover:text-foreground transition-colors duration-300'>Cloud & DevOps</Link></li>
           </ul>
         </div>
 
         <div className='flex flex-col gap-5'>
           <div className='text-lg font-medium'>Products</div>
           <ul className='text-muted-foreground space-y-3 text-sm'>
-            <li><a href='#' className='hover:text-foreground transition-colors duration-300'>AI Greentick</a></li>
-            <li><a href='#' className='hover:text-foreground transition-colors duration-300'>All Products</a></li>
+            <li><Link href='/products/ai-greentick' className='hover:text-foreground transition-colors duration-300'>AI Greentick</Link></li>
+            <li><Link href='/products' className='hover:text-foreground transition-colors duration-300'>All Products</Link></li>
           </ul>
         </div>
 
         <div className='flex flex-col gap-5'>
           <div className='text-lg font-medium'>Company</div>
           <ul className='text-muted-foreground space-y-3 text-sm'>
-            <li><a href='#' className='hover:text-foreground transition-colors duration-300'>About</a></li>
-            <li><a href='#' className='hover:text-foreground transition-colors duration-300'>Industries</a></li>
-            <li><a href='#' className='hover:text-foreground transition-colors duration-300'>Case Studies</a></li>
-            <li><a href='#' className='hover:text-foreground transition-colors duration-300'>Blog</a></li>
-            <li><a href='#' className='hover:text-foreground transition-colors duration-300'>Careers</a></li>
-            <li><a href='#' className='hover:text-foreground transition-colors duration-300'>Contact</a></li>
+            <li><Link href='/about' className='hover:text-foreground transition-colors duration-300'>About Us</Link></li>
+            <li><Link href='/industries' className='hover:text-foreground transition-colors duration-300'>Industries</Link></li>
+            <li><Link href='/case-studies' className='hover:text-foreground transition-colors duration-300'>Case Studies</Link></li>
+            <li><Link href='/blog' className='hover:text-foreground transition-colors duration-300'>Blog</Link></li>
+            <li><Link href='/careers' className='hover:text-foreground transition-colors duration-300'>Careers</Link></li>
+            <li><Link href='/contact' className='hover:text-foreground transition-colors duration-300'>Contact</Link></li>
           </ul>
         </div>
       </div>
