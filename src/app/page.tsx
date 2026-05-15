@@ -1,276 +1,307 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { BentoGrid } from "@/components/BentoGrid";
-import { ArrowRight, Code, Smartphone, BrainCircuit, Rocket, CheckCircle2, ChevronRight, Activity, Zap, Users } from "lucide-react";
-import Link from "next/link";
+import {
+  ActivityIcon,
+  Building2Icon,
+  CheckCircle2,
+  CreditCardIcon,
+  GraduationCapIcon,
+  HeartPulseIcon,
+  PlaneIcon,
+  ShoppingBagIcon,
+  UsersIcon,
+  Zap,
+} from 'lucide-react'
+
+import { BentoGrid } from '@/components/BentoGrid'
+import Blog from '@/components/shadcn-studio/blocks/blog-component-06/blog-component-06'
+import CTA from '@/components/shadcn-studio/blocks/cta-section-11/cta-section-11'
+import Features01 from '@/components/shadcn-studio/blocks/features-section-01/features-section-01'
+import Features18 from '@/components/shadcn-studio/blocks/features-section-18/features-section-18'
+import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer-component-05'
+import HeroSection from '@/components/shadcn-studio/blocks/hero-section-16/hero-section-16'
+import TestimonialsComponent from '@/components/shadcn-studio/blocks/testimonials-component-02/testimonials-component-02'
+import type { TestimonialItem } from '@/components/shadcn-studio/blocks/testimonials-component-02/testimonials-component-02'
+import SiteNavbar from '@/components/site-navbar'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+
+const featuresList = [
+  {
+    icon: CheckCircle2,
+    title: 'We use what we build',
+    description:
+      'AI Greentick runs on the same stack and workflows we use for client projects. If it works at scale for real users, it can work for yours too.',
+  },
+  {
+    icon: UsersIcon,
+    title: 'Senior-heavy team',
+    description:
+      "Most engineers on your project are mid-to-senior level. You're not paying senior rates to train juniors on your product.",
+  },
+  {
+    icon: ActivityIcon,
+    title: 'Fixed quotes, no surprises',
+    description:
+      'We provide a fixed price and timeline after scoping. Any out-of-scope work is discussed and approved separately before development begins.',
+  },
+  {
+    icon: Zap,
+    title: 'Full IP handover',
+    description:
+      'Your code, assets, and infrastructure belong to you from day one. Repositories can be transferred directly to your GitHub or GitLab.',
+  },
+]
+
+const testimonials: TestimonialItem[] = [
+  {
+    name: 'Eleanor Pena',
+    handle: '@BerryB777',
+    avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-2.png?width=48&height=48&format=auto',
+    rating: 5,
+    title: 'Seamless Integration',
+    content:
+      'shadcn/studio has made my development process so much easier! The components are intuitive and blend perfectly with Tailwind CSS.',
+    platformName: 'G2',
+    platformImage: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/g2-logo.png?width=22&height=22&format=auto',
+  },
+  {
+    name: 'Darlene Robertson',
+    handle: '@LatentHQ',
+    avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-3.png?width=48&height=48&format=auto',
+    rating: 5,
+    title: 'Incredible Support',
+    content:
+      'The support team behind shadcn/studio is fantastic! They helped me with integration issues quickly and efficiently.',
+    platformName: 'Trustpilot',
+    platformImage:
+      'https://cdn.shadcnstudio.com/ss-assets/brand-logo/trustpilot-icon.png?width=22&height=22&format=auto',
+  },
+  {
+    name: 'Esther Howard',
+    handle: '@oxtuggs',
+    avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-1.png?width=48&height=48&format=auto',
+    rating: 4.5,
+    title: 'Fantastic Component Library',
+    content:
+      'shadcn/studio is a fantastic tool for any developer using Shadcn UI. The components are not only beautiful but also functional!',
+    platformName: 'Twitter',
+    platformImage: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/twitter-icon.png?width=22&height=22&format=auto',
+  },
+  {
+    name: 'Floyd Miles',
+    handle: '@Athar',
+    avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-3.png?width=48&height=48&format=auto',
+    rating: 4.5,
+    title: 'Game Changer for Developers',
+    content:
+      'Using shadcn/studio has transformed the way I build applications. The ease of use and flexibility is unmatched!',
+    platformName: 'Twitter',
+    platformImage: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/twitter-icon.png?width=22&height=22&format=auto',
+  },
+  {
+    name: 'Brad Hanna',
+    handle: '@Marko',
+    avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-2.png?width=48&height=48&format=auto',
+    rating: 4.5,
+    title: 'Perfect for Rapid Development',
+    content:
+      'shadcn/studio has significantly sped up my development process. The pre-built components are perfect for rapid prototyping!',
+    platformName: 'Twitter',
+    platformImage: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/twitter-icon.png?width=22&height=22&format=auto',
+  },
+  {
+    name: 'Cody Fisher',
+    handle: '@BerryB777',
+    avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-2.png?width=48&height=48&format=auto',
+    rating: 5,
+    title: 'Effortless Design',
+    content:
+      'shadcn/studio has made designing my web applications effortless. The components are easy to customize and integrate seamlessly!',
+    platformName: 'G2',
+    platformImage: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/g2-logo.png?width=22&height=22&format=auto',
+  },
+  {
+    name: 'Theresa Webb',
+    handle: '@inverse_hq',
+    avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-2.png?width=48&height=48&format=auto',
+    rating: 4.5,
+    title: 'Highly Recommended',
+    content:
+      "The attention to detail in shadcn/studio's components is impressive. It saves me so much time and effort in my projects!",
+    platformName: 'Trustpilot',
+    platformImage:
+      'https://cdn.shadcnstudio.com/ss-assets/brand-logo/trustpilot-icon.png?width=22&height=22&format=auto',
+  },
+  {
+    name: 'Dianne Russell',
+    handle: '@mukherjee',
+    avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-4.png?width=48&height=48&format=auto',
+    rating: 5,
+    title: 'Exceptional User Experience',
+    content:
+      'shadcn/studio has truly elevated my projects! The components are not only easy to use but also enhance the overall user experience.',
+    platformName: 'Trustpilot',
+    platformImage:
+      'https://cdn.shadcnstudio.com/ss-assets/brand-logo/trustpilot-icon.png?width=22&height=22&format=auto',
+  },
+  {
+    name: 'Kathryn Murphy',
+    handle: '@stap',
+    avatar: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-1.png?width=48&height=48&format=auto',
+    rating: 4.5,
+    title: 'A Must-Have for Tailwind Users',
+    content:
+      'shadcn/studio is a must-have for anyone working with Shadcn UI. The library is well-organized and offers outstanding flexibility!',
+    platformName: 'Twitter',
+    platformImage: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/twitter-icon.png?width=22&height=22&format=auto',
+  },
+]
+
+const blogCards = [
+  {
+    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/blog/image-25.png',
+    alt: 'Engineering notes',
+    tags: ['Engineering', 'Product'],
+    title: 'How we decide what to build first',
+    date: 'May 15, 2026',
+    blogLink: '#',
+  },
+  {
+    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/blog/image-24.png',
+    alt: 'AI experiments',
+    tags: ['AI', 'Automation'],
+    title: 'Where AI actually saves teams time',
+    date: 'May 15, 2026',
+    blogLink: '#',
+  },
+  {
+    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/blog/image-23.png',
+    alt: 'SaaS product playbooks',
+    tags: ['SaaS', 'Playbook'],
+    title: 'Lessons from running our own SaaS',
+    date: 'May 15, 2026',
+    blogLink: '#',
+  },
+]
+
+const industries = [
+  {
+    icon: ShoppingBagIcon,
+    title: 'E-commerce',
+    description: 'Headless storefronts, D2C workflows, customer portals and conversion-focused product experiences.',
+  },
+  {
+    icon: HeartPulseIcon,
+    title: 'Healthcare',
+    description: 'Secure patient journeys, appointment flows, operational dashboards and reliable care platforms.',
+  },
+  {
+    icon: GraduationCapIcon,
+    title: 'Education',
+    description: 'Learning platforms, student apps, admin tools and AI-assisted support for education teams.',
+  },
+  {
+    icon: Building2Icon,
+    title: 'Real Estate',
+    description: 'Property portals, broker CRMs, lead workflows and WhatsApp-first buyer communication systems.',
+  },
+  {
+    icon: CreditCardIcon,
+    title: 'FinTech',
+    description: 'KYC flows, lending workflows, secure dashboards and document-heavy financial operations.',
+  },
+  {
+    icon: PlaneIcon,
+    title: 'Travel',
+    description: 'Booking engines, guest apps, channel tools and support systems for hospitality teams.',
+  },
+]
+
+const HeroSection16Block = () => {
+  return (
+    <div>
+      <SiteNavbar />
+      <main className='flex flex-col overflow-hidden'>
+        <HeroSection />
+      </main>
+    </div>
+  )
+}
+
+const FeaturesSection12Block = () => {
+  return <BentoGrid />
+}
+
+const FeaturesSection18Block = () => {
+  return <Features18 />
+}
+
+const FeaturesSection01Block = () => {
+  return <Features01 featuresList={featuresList} />
+}
+
+const CtaSection11Block = () => {
+  return <CTA />
+}
+
+const TestimonialsComponent02Block = () => {
+  return <TestimonialsComponent testimonials={testimonials} />
+}
+
+const BlogComponent06Block = () => {
+  return <Blog blogCards={blogCards} />
+}
+
+const IndustriesSectionBlock = () => {
+  return (
+    <section className='bg-[#FAFAFA] py-8 sm:py-16 lg:py-24'>
+      <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
+        <div className='mx-auto mb-12 max-w-3xl space-y-4 text-center sm:mb-16'>
+          <p className='text-primary text-sm font-medium uppercase'>Industries we serve</p>
+          <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Built For The Industries That Move Fast</h2>
+          <p className='text-muted-foreground text-xl'>
+            E-commerce, healthcare, education, real estate, FinTech and travel - different domains, same need for
+            software that just works.
+          </p>
+        </div>
+
+        <div className='grid gap-6 grid-cols-2 lg:grid-cols-3'>
+          {industries.map(industry => (
+            <Card
+              key={industry.title}
+              className='h-full shadow-none transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-md'
+            >
+              <CardHeader>
+                <div className='mb-4 flex size-10 items-center justify-center rounded-md bg-primary/10 text-primary'>
+                  <industry.icon className='size-5' />
+                </div>
+                <CardTitle>{industry.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className='text-base leading-7'>{industry.description}</CardDescription>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+const FooterComponent05Block = () => {
+  return <Footer />
+}
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col font-sans">
-      {/* Navbar (Placeholder for now) */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between mx-auto px-4 md:px-6">
-          <div className="flex items-center gap-2">
-            <div className="bg-primary text-primary-foreground font-display italic text-xl h-8 w-8 flex items-center justify-center rounded-md">
-              A
-            </div>
-            <span className="font-semibold tracking-tight">Apargo</span>
-          </div>
-          <nav className="hidden md:flex gap-6 text-sm font-medium">
-            <Link href="/services" className="text-muted-foreground hover:text-foreground">Services</Link>
-            <Link href="/about" className="text-muted-foreground hover:text-foreground">About Us</Link>
-            <Link href="/products" className="text-muted-foreground hover:text-foreground">Products</Link>
-          </nav>
-          <Button size="sm">Contact Us</Button>
-        </div>
-      </header>
-
-      <main className="flex-1">
-        {/* HERO SECTION */}
-        <section className="relative overflow-hidden py-24 md:py-32 border-b">
-          <div className="absolute top-[-200px] right-[-200px] w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(26,135,84,0.10)_0%,transparent_65%)] pointer-events-none" />
-          <div className="container px-4 md:px-6 mx-auto">
-            <div className="flex flex-col items-start gap-6 max-w-4xl">
-              <div className="font-mono text-xs font-medium uppercase tracking-widest text-muted-foreground">
-                Product Engineering & AI Services
-              </div>
-              <h1 className="font-display text-5xl md:text-7xl leading-[1.1] tracking-tight">
-                We build software that growing businesses <i className="text-primary font-display font-normal">actually use.</i>
-              </h1>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-                From custom platforms and mobile apps to in-house SaaS products like AI Greentick — Apargo is the engineering partner founders call when they want to ship fast, scale safely and stay technical.
-              </p>
-              <div className="flex flex-wrap gap-4 pt-4">
-                <Button size="lg" className="h-12 px-8 text-base">Book a Free Consultation</Button>
-                <Button size="lg" variant="outline" className="h-12 px-8 text-base group">
-                  See Our Work <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* LOGOS / TRUST STRIP */}
-        <section className="py-12 border-b bg-muted/30">
-          <div className="container px-4 md:px-6 mx-auto">
-            <p className="text-center text-sm font-medium text-muted-foreground mb-8">
-              Trusted by founders building serious products. Startups, D2C brands, agencies and service businesses use what we build.
-            </p>
-            <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-60 grayscale">
-              {['Acme Corp', 'Globex', 'Soylent', 'Initech', 'Massive Dynamic'].map((company) => (
-                <div key={company} className="font-display italic text-2xl font-bold">{company}</div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* FOUR WAYS WE HELP YOU SHIP - BENTO GRID */}
-        <BentoGrid />
-
-        {/* FEATURED PRODUCT - AI GREENTICK */}
-        <section className="py-24 border-b bg-card">
-          <div className="container px-4 md:px-6 mx-auto">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <div className="font-mono text-xs font-medium uppercase tracking-widest text-muted-foreground mb-4">
-                  From the Apargo Lab
-                </div>
-                <h2 className="font-display italic text-4xl md:text-5xl mb-6 font-normal">
-                  AI Greentick — the WhatsApp marketing suite we built for modern teams
-                </h2>
-                <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                  Broadcasts, shared team inbox, no-code AI chatbots and full campaign analytics — built on the official WhatsApp Business API. Used by D2C brands, agencies and service businesses to turn WhatsApp into a real revenue channel.
-                </p>
-                
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
-                  <div>
-                    <div className="text-3xl font-display font-bold text-primary mb-1">3x faster</div>
-                    <div className="text-sm text-muted-foreground">reply times with shared inbox</div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-display font-bold text-primary mb-1">90%+</div>
-                    <div className="text-sm text-muted-foreground">average WhatsApp read rates</div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-display font-bold text-primary mb-1">One #</div>
-                    <div className="text-sm text-muted-foreground">unlimited team members</div>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <Button>Visit AI Greentick <ArrowRight className="ml-2 h-4 w-4" /></Button>
-                  <Button variant="outline">Book a Demo</Button>
-                </div>
-              </div>
-              <div className="relative aspect-square md:aspect-[4/3] lg:aspect-square bg-muted rounded-2xl border flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 bg-[linear-gradient(to_bottom_right,var(--color-primary)_0%,transparent_100%)] opacity-10" />
-                <div className="relative w-3/4 h-3/4 bg-background rounded-xl shadow-2xl border flex flex-col overflow-hidden">
-                  <div className="h-12 border-b bg-muted/50 flex items-center px-4 gap-2">
-                    <div className="w-3 h-3 rounded-full bg-red-400" />
-                    <div className="w-3 h-3 rounded-full bg-amber-400" />
-                    <div className="w-3 h-3 rounded-full bg-green-400" />
-                  </div>
-                  <div className="flex-1 p-6 flex flex-col gap-4">
-                    <div className="h-8 w-1/3 bg-muted rounded" />
-                    <div className="h-32 w-full bg-muted/50 rounded-lg" />
-                    <div className="h-24 w-2/3 bg-primary/10 rounded-lg" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* HOW WE WORK */}
-        <section className="py-24 border-b">
-          <div className="container px-4 md:px-6 mx-auto">
-            <div className="mb-16 max-w-2xl mx-auto text-center">
-              <h2 className="font-display italic text-4xl md:text-5xl mb-4 font-normal">A simple, transparent process</h2>
-              <p className="text-lg text-muted-foreground">
-                Four steps from first call to first release. No surprise invoices, no "it's almost done" energy.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-4 gap-8">
-              {[
-                { step: "01", title: "Discover", desc: "One short call to understand the problem, users and constraints. We push back early if scope doesn't match the goal." },
-                { step: "02", title: "Plan", desc: "Detailed scope, milestones, tech stack and fixed quote. You sign only after you've seen exactly what you'll get." },
-                { step: "03", title: "Build", desc: "Weekly demos on a real preview link. Slack channel with the actual engineers. Trello or Linear board you can see anytime." },
-                { step: "04", title: "Launch & Support", desc: "Code handover, deployment, training. Then a flexible support window — bug fixes, small changes, or a full retainer." }
-              ].map((item, i) => (
-                <div key={i} className="relative flex flex-col gap-4">
-                  <div className="text-5xl font-display text-muted/50 font-bold">{item.step}</div>
-                  <h3 className="text-xl font-semibold">{item.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{item.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* WHY TEAMS PICK APARGO */}
-        <section className="py-24 border-b bg-muted/20">
-          <div className="container px-4 md:px-6 mx-auto">
-            <h2 className="font-display italic text-4xl md:text-5xl mb-12 font-normal">Four reasons we stick</h2>
-            <div className="grid md:grid-cols-2 gap-x-12 gap-y-16">
-              <div className="flex gap-4">
-                <div className="mt-1 bg-primary/10 p-2 rounded-lg h-fit"><CheckCircle2 className="h-6 w-6 text-primary" /></div>
-                <div>
-                  <h3 className="text-xl font-semibold mb-2">We use what we build</h3>
-                  <p className="text-muted-foreground leading-relaxed">AI Greentick runs on the same stack and same workflows we use for client projects. If it can serve real paying users at scale, it can serve yours too.</p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="mt-1 bg-primary/10 p-2 rounded-lg h-fit"><Users className="h-6 w-6 text-primary" /></div>
-                <div>
-                  <h3 className="text-xl font-semibold mb-2">Senior-heavy team</h3>
-                  <p className="text-muted-foreground leading-relaxed">Most engineers on your project are mid-to-senior. You're not paying senior rates to train juniors on your problem.</p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="mt-1 bg-primary/10 p-2 rounded-lg h-fit"><Activity className="h-6 w-6 text-primary" /></div>
-                <div>
-                  <h3 className="text-xl font-semibold mb-2">Fixed quotes, no surprises</h3>
-                  <p className="text-muted-foreground leading-relaxed">We give a fixed price and a fixed timeline after scoping. Out-of-scope items are quoted separately before any work starts.</p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="mt-1 bg-primary/10 p-2 rounded-lg h-fit"><Zap className="h-6 w-6 text-primary" /></div>
-                <div>
-                  <h3 className="text-xl font-semibold mb-2">Full IP handover</h3>
-                  <p className="text-muted-foreground leading-relaxed">Code is yours from day one. Repos transfer to your GitHub or GitLab. NDAs signed before we see anything sensitive.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* INDUSTRIES WE SERVE */}
-        <section className="py-24 border-b">
-          <div className="container px-4 md:px-6 mx-auto">
-            <div className="mb-12">
-              <h2 className="font-display italic text-4xl md:text-5xl mb-4 font-normal">Built for the industries that move fast</h2>
-              <p className="text-lg text-muted-foreground max-w-2xl">
-                E-commerce, healthcare, education, real estate, FinTech and travel — different domains, same need for software that just works.
-              </p>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {['E-commerce & D2C', 'Healthcare', 'Education & EdTech', 'Real Estate', 'FinTech & BFSI', 'Travel & Hospitality'].map((industry) => (
-                <div key={industry} className="flex items-center justify-center p-8 border border-border/50 rounded-xl bg-card hover:bg-muted/50 transition-colors text-center font-medium cursor-pointer shadow-sm">
-                  {industry}
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* FINAL CTA */}
-        <section className="py-32 relative overflow-hidden text-center bg-card">
-          <div className="container relative z-10 px-4 md:px-6 mx-auto">
-            <h2 className="font-display text-5xl md:text-7xl mb-6 font-normal">Have a project in mind?</h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
-              Tell us what you're building. We'll reply within one working day with honest feedback — and a clear next step, even if it's not us.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button size="lg" className="h-14 px-8 text-lg">Book a Free Consultation</Button>
-              <Button size="lg" variant="outline" className="h-14 px-8 text-lg">Email hello@apargo.com</Button>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      {/* FOOTER */}
-      <footer className="border-t bg-muted/20 py-16">
-        <div className="container px-4 md:px-6 mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-16">
-            <div className="col-span-2 md:col-span-1">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="bg-primary text-primary-foreground font-display italic h-6 w-6 flex items-center justify-center rounded-sm text-sm">A</div>
-                <span className="font-semibold">Apargo</span>
-              </div>
-              <p className="text-sm text-muted-foreground">Product engineering and AI services. Builders of AI Greentick.</p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Services</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="#" className="hover:text-foreground">Web Development</Link></li>
-                <li><Link href="#" className="hover:text-foreground">Mobile App Development</Link></li>
-                <li><Link href="#" className="hover:text-foreground">Custom Software</Link></li>
-                <li><Link href="#" className="hover:text-foreground">AI & Machine Learning</Link></li>
-                <li><Link href="#" className="hover:text-foreground">SaaS Product Development</Link></li>
-                <li><Link href="#" className="hover:text-foreground">Cloud & DevOps</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Products</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="#" className="hover:text-foreground">AI Greentick</Link></li>
-                <li><Link href="#" className="hover:text-foreground">All Products</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Company</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="#" className="hover:text-foreground">About</Link></li>
-                <li><Link href="#" className="hover:text-foreground">Industries</Link></li>
-                <li><Link href="#" className="hover:text-foreground">Case Studies</Link></li>
-                <li><Link href="#" className="hover:text-foreground">Blog</Link></li>
-                <li><Link href="#" className="hover:text-foreground">Careers</Link></li>
-                <li><Link href="#" className="hover:text-foreground">Contact</Link></li>
-              </ul>
-            </div>
-          </div>
-          <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t text-xs text-muted-foreground">
-            <p>© 2026 Apargo. All rights reserved.</p>
-            <div className="flex gap-4 mt-4 md:mt-0">
-              <Link href="#" className="hover:text-foreground">Privacy Policy</Link>
-              <Link href="#" className="hover:text-foreground">Terms of Service</Link>
-              <Link href="#" className="hover:text-foreground">Cookie Policy</Link>
-            </div>
-          </div>
-        </div>
-      </footer>
+    <div className='flex min-h-screen flex-col font-sans'>
+      <HeroSection16Block />
+      <FeaturesSection12Block />
+      <FeaturesSection18Block />
+      <FeaturesSection01Block />
+      <TestimonialsComponent02Block />
+      <IndustriesSectionBlock />
+      <BlogComponent06Block />
+      <CtaSection11Block />
+      <FooterComponent05Block />
     </div>
-  );
+  )
 }

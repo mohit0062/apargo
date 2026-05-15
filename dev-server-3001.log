@@ -1,0 +1,18 @@
+
+> apargo-web@0.1.0 dev
+> next dev --port 3001
+
+▲ Next.js 16.2.6 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://192.168.31.121:3001
+- Environments: .env
+✓ Ready in 463ms
+⨯ Another next dev server is already running.
+
+- Local:        http://localhost:3000
+- PID:          15156
+- Dir:          E:\APARGO\apargo-web
+- Log:          .next\dev\logs\next-development.log
+
+Run taskkill /PID 15156 /F to stop it.
+[?25h
