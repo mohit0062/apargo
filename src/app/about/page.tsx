@@ -1,48 +1,172 @@
-import Blog from '@/components/shadcn-studio/blocks/blog-component-06/blog-component-06'
-import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer-component-05'
-import SiteNavbar from '@/components/site-navbar'
+import type { Metadata } from 'next'
 
-const blogCards = [
+import SiteNavbar from '@/components/site-navbar'
+import AboutUs11 from '@/components/shadcn-studio/blocks/about-us-page-11/about-us-page-11'
+import AboutUs18 from '@/components/shadcn-studio/blocks/about-us-page-18/about-us-page-18'
+import BentoGrid from '@/components/shadcn-studio/blocks/bento-grid-16/bento-grid-16'
+import CTA from '@/components/shadcn-studio/blocks/cta-section-11/cta-section-11'
+import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer-component-05'
+import HowWeWork from '@/components/shadcn-studio/blocks/how-we-work/how-we-work'
+import Team from '@/components/shadcn-studio/blocks/team-section-12/team-section-12'
+import type { TeamMember } from '@/components/shadcn-studio/blocks/team-section-12/team-section-12'
+
+export const metadata: Metadata = {
+  title: 'About Apargo - The Team Behind AI Greentick',
+  description:
+    'Meet Apargo - a product-engineering company building custom software, mobile apps and SaaS products. The team behind AI Greentick.'
+}
+
+const stats = [
   {
-    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/blog/image-25.png',
-    alt: 'Search and Discovery',
-    tags: ['Articles', 'Post Types'],
-    title: 'Estate Insights and Advice Corner',
-    date: 'Nov 11, 2023',
-    blogLink: '#'
+    value: 45,
+    description: 'Projects Shipped'
   },
   {
-    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/blog/image-24.png',
-    alt: 'Dreamscape Realty',
-    tags: ['Articles', 'Post Types'],
-    title: 'Dreamscape Realty to Real Estate',
-    date: 'Dec 3, 2023',
-    blogLink: '#'
+    value: 20,
+    description: 'Active Clients'
   },
   {
-    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/blog/image-23.png',
-    alt: 'Property Sale Agreement',
-    tags: ['Articles', 'Post Types'],
-    title: 'What is Property Agreement?',
-    date: 'January 15, 2024',
-    blogLink: '#'
+    value: 35,
+    description: 'Engineering Team'
   }
 ]
 
-const BlogComponent06Block = () => {
-  return <Blog blogCards={blogCards} />
-}
+const avatars = [
+  {
+    src: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-3.png',
+    fallback: 'HL',
+    name: 'Howard Lloyd'
+  },
+  {
+    src: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-6.png',
+    fallback: 'OS',
+    name: 'Olivia Sparks'
+  },
+  {
+    src: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-5.png',
+    fallback: 'HR',
+    name: 'Hallie Richards'
+  },
+  {
+    src: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-16.png',
+    fallback: 'JW',
+    name: 'Jenny Wilson'
+  },
+  {
+    src: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-7.png',
+    fallback: 'MC',
+    name: 'Michael Chen'
+  },
+  {
+    src: 'https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-8.png',
+    fallback: 'SD',
+    name: 'Sarah Davis'
+  }
+]
 
-const LandingPage = () => {
+const logos = [
+  {
+    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/amazon-logo-bw.png',
+    alt: 'Amazon'
+  },
+  {
+    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/walmart-logo-bw.png',
+    alt: 'Walmart'
+  },
+  {
+    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/hubspot-logo-bw.png',
+    alt: 'HubSpot'
+  },
+  {
+    image: 'https://cdn.shadcnstudio.com/ss-assets/brand-logo/microsoft-logo-bw.png',
+    alt: 'Microsoft'
+  }
+]
+
+const teamMember: TeamMember[] = [
+  {
+    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/team/image-57.png',
+    name: 'Ethan Caldwell',
+    title: 'Executive Director',
+    description: 'Visionary leader driving innovation and fostering a culture of collaboration and growth.',
+    type: 'management',
+    facebookLink: '#',
+    twitterLink: '#',
+    githubLink: '#',
+    instagramLink: '#'
+  },
+  {
+    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/team/image-56.png',
+    name: 'Oliver Grayson',
+    title: 'Chief Executive Officer',
+    description: 'Dynamic CEO inspiring creativity, strategic thinking, and a unified team spirit.',
+    type: 'management',
+    facebookLink: '#',
+    twitterLink: '#',
+    githubLink: '#',
+    instagramLink: '#'
+  },
+  {
+    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/team/image-55.png',
+    name: 'Liam Hawthorne',
+    title: 'Head of Innovation',
+    description: 'Innovative thinker passionate about transforming ideas into impactful solutions.',
+    type: 'design team',
+    facebookLink: '#',
+    twitterLink: '#',
+    githubLink: '#',
+    instagramLink: '#'
+  },
+  {
+    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/team/image-52.png',
+    name: 'Lucas Bennett',
+    title: 'UI/UX Architect',
+    description: 'Expert UI/UX architect dedicated to crafting intuitive and memorable user experiences.',
+    type: 'design team',
+    facebookLink: '#',
+    twitterLink: '#',
+    githubLink: '#',
+    instagramLink: '#'
+  },
+  {
+    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/team/image-50.png',
+    name: 'Mason Rivers',
+    title: 'Senior Developer',
+    description: 'Skilled developer committed to building robust, scalable, and efficient digital products.',
+    type: 'Development team',
+    facebookLink: '#',
+    twitterLink: '#',
+    githubLink: '#',
+    instagramLink: '#'
+  },
+  {
+    image: 'https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/team/image-54.png',
+    name: 'Noah Sinclair',
+    title: 'A Chief Marketing Officer',
+    description: 'Marketing strategist focused on elevating brand presence and driving successful campaigns.',
+    type: 'Marketing team',
+    facebookLink: '#',
+    twitterLink: '#',
+    githubLink: '#',
+    instagramLink: '#'
+  }
+]
+
+const AboutPage = () => {
   return (
     <div className='flex min-h-screen flex-col'>
       <SiteNavbar />
-      <main className='flex-1'>
-        <BlogComponent06Block />
+      <main className='flex-1 pt-[4.5rem]'>
+        <AboutUs18 stats={stats} />
+        <AboutUs11 avatars={avatars} logos={logos} />
+        <BentoGrid />
+        <Team teamMember={teamMember} />
+        <HowWeWork />
+        <CTA />
       </main>
       <Footer />
     </div>
   )
 }
 
-export default LandingPage
+export default AboutPage

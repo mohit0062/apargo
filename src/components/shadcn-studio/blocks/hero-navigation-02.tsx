@@ -28,6 +28,8 @@ import {
 
 import { cn } from '@/lib/utils'
 
+import LogoSvg from '@/assets/svg/logo'
+
 type NavigationItem = {
   title: string
   href: string
@@ -110,7 +112,7 @@ const HeroNavigation02 = ({ navigationData, className }: { navigationData: Navig
 
   return (
     <div className={cn('flex items-center', className)}>
-      <NavigationMenu>
+      <NavigationMenu data-viewport={false}>
         <NavigationMenuList className='flex-wrap gap-0'>
           {navigationData.map(navItem => {
             // Simple link (no dropdown)
@@ -207,9 +209,11 @@ const HeroNavigation02SmallScreen = ({
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger className={cn('inline-flex lg:hidden hover:bg-accent hover:text-accent-foreground items-center justify-center rounded-md border border-input bg-background size-8', triggerClassName)}>
-          <MenuIcon className="size-4" />
+      <SheetTrigger>
+        <Button variant='outline' size='icon' className={cn('inline-flex lg:hidden', triggerClassName)}>
+          <MenuIcon />
           <span className='sr-only'>Menu</span>
+        </Button>
       </SheetTrigger>
       <SheetContent side='left' className='w-75 gap-0 p-0'>
         <SheetHeader className='p-4'>
@@ -217,7 +221,8 @@ const HeroNavigation02SmallScreen = ({
           <SheetDescription hidden />
           <a href='#' onClick={handleLinkClick} className='self-start'>
             <div className='flex items-center'>
-              <img src='/group-2.svg' alt={logoName} className='h-9 w-auto max-w-42' />
+              <LogoSvg className='size-8.5' />
+              <span className='ml-2.5 text-xl font-semibold'>{logoName}</span>
             </div>
           </a>
         </SheetHeader>

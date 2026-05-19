@@ -1,4 +1,4 @@
-import { MailIcon, ClockIcon, ArrowRightIcon } from 'lucide-react'
+import { MailIcon, CalendarDaysIcon, ArrowRightIcon } from 'lucide-react'
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
@@ -12,7 +12,9 @@ type BlogCard = {
   alt: string
   tags: string[]
   title: string
+  description?: string
   date: string
+  author?: string
   blogLink: string
 }[]
 
@@ -31,7 +33,7 @@ const Blog = ({ blogCards }: { blogCards: BlogCard }) => {
               Check out cool new spots, try out yummy local foods, and dive into different cultures.
             </p>
             <a
-              href='#'
+              href='/blog'
               className={cn(buttonVariants({ size: 'lg' }), 'group rounded-lg text-base has-[>svg]:px-6')}
             >
               See All Blogs
@@ -72,27 +74,55 @@ const Blog = ({ blogCards }: { blogCards: BlogCard }) => {
         {/* Blog Grid */}
         <div className='flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:pb-0'>
           {blogCards.map((card, index) => (
-            <a href={card.blogLink} key={index} className='w-[85vw] shrink-0 snap-start md:w-auto'>
-              <Card className='py-0 shadow-none max-lg:last:col-span-full'>
-                <CardContent className='px-0'>
-                  <img src={card.image} alt={card.alt} className='max-h-60 w-full rounded-t-xl object-cover' />
-                  <div className='gap-4 space-y-4 p-6'>
-                    <div className='mb-2 flex flex-wrap gap-2'>
-                      {card.tags.map((tag, index) => (
-                        <Badge key={index} className='bg-primary/10 text-primary border-none text-sm'>
+            <div key={index} className='w-[85vw] shrink-0 snap-start md:w-auto'>
+              <Card className='group h-full overflow-hidden shadow-none transition-all duration-300 border'>
+                <CardContent className='space-y-3.5 p-6'>
+                  <div className='mb-6 overflow-hidden rounded-lg sm:mb-8'>
+                    <a href={card.blogLink}>
+                      <img
+                        src={card.image}
+                        alt={card.alt}
+                        className='max-h-60 w-full object-cover transition-transform duration-300 group-hover:scale-105'
+                      />
+                    </a>
+                  </div>
+                  <div className='flex items-center justify-between gap-1.5'>
+                    <div className='text-muted-foreground flex items-center gap-1.5'>
+                      <CalendarDaysIcon className='size-5' />
+                      <span>{card.date}</span>
+                    </div>
+                    <div className='flex flex-wrap gap-1'>
+                      {card.tags.map((tag, idx) => (
+                        <Badge key={idx} className='bg-primary/10 text-primary rounded-full border-0 text-sm'>
                           {tag}
                         </Badge>
                       ))}
                     </div>
-                    <CardTitle className='text-xl font-medium'>{card.title}</CardTitle>
-                    <CardDescription className='flex items-center gap-1.5 py-1 text-base'>
-                      <ClockIcon className='text-muted-foreground size-5' />
-                      <span className='text-muted-foreground'>{card.date}</span>
-                    </CardDescription>
+                  </div>
+                  <h3 className='line-clamp-2 text-lg font-medium md:text-xl'>
+                    <a href={card.blogLink}>{card.title}</a>
+                  </h3>
+                  {card.description && (
+                    <p className='text-muted-foreground line-clamp-2 text-base'>{card.description}</p>
+                  )}
+                  <div className='flex items-center justify-between pt-2'>
+                    <span className='text-sm font-medium text-muted-foreground'>
+                      {card.author || 'Apargo Team'}
+                    </span>
+                    <a
+                      href={card.blogLink}
+                      className={cn(
+                        buttonVariants({ size: 'icon', variant: 'outline' }),
+                        'group-hover:bg-primary! group-hover:text-primary-foreground group-hover:border-primary hover:border-primary hover:bg-primary! hover:text-primary-foreground rounded-full'
+                      )}
+                    >
+                      <ArrowRightIcon className='size-4 -rotate-45' />
+                      <span className='sr-only'>Read more: {card.title}</span>
+                    </a>
                   </div>
                 </CardContent>
               </Card>
-            </a>
+            </div>
           ))}
         </div>
       </div>
