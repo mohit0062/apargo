@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useEffect } from 'react'
 
@@ -119,7 +119,7 @@ const AppIntegration = ({ integrations }: { integrations: Integration }) => {
                   <Button
                     className='bg-primary/10 text-primary group-hover:text-primary group-hover:bg-primary-foreground hover:bg-primary-foreground hover:text-primary transition-all duration-300'
                     size='icon'
-                    render={<a href='#' />}
+                    render={<a href='/contact' />}
                   >
                     <ChevronRightIcon />
                   </Button>

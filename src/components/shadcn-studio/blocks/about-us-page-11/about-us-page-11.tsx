@@ -20,7 +20,39 @@ type Logo = {
   alt: string
 }
 
-const AboutUs = ({ avatars, logos }: { avatars: AvatarData[]; logos: Logo[] }) => {
+interface AboutUsStoryProps {
+  avatars?: AvatarData[]
+  logos?: Logo[]
+  badgeText?: string
+  heading?: string
+  description?: string
+  imageUrl?: string
+  contentHeading?: string
+  paragraphs?: string[]
+}
+
+const defaultParagraphs = [
+  "Apargo started with one belief: growing businesses don’t fail because of ideas — they fail because execution is slow.",
+  "So we built a senior-heavy engineering team focused on shipping fast, solving real problems and working closely with founders.",
+  "As our clients grew, we faced the same operational challenges they did — especially around WhatsApp at scale. That led us to build AI Greentick, now used by businesses across India and beyond.",
+  "Today Apargo builds custom software for ambitious companies while also running and scaling our own SaaS products."
+]
+
+const AboutUs = ({
+  avatars,
+  logos,
+  badgeText = "Our story",
+  heading = "How Apargo started",
+  description = "Apargo was built for founders who needed real execution — not endless presentations, delays and outsourced confusion.",
+  imageUrl = "https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/about-us/image-45.png",
+  contentHeading = "We build products the way ambitious teams actually need them built.",
+  paragraphs = defaultParagraphs
+}: AboutUsStoryProps) => {
+  // Gracefully highlight the last word of the heading
+  const headingWords = (heading || "").trim().split(" ")
+  const lastWord = headingWords.length > 1 ? headingWords.pop() : ""
+  const firstWords = headingWords.join(" ")
+
   return (
     <section className='bg-[#E5E2DA] relative overflow-hidden py-8 sm:py-16 lg:py-24'>
       {/* Background Ripple Effect */}
@@ -175,15 +207,17 @@ const AboutUs = ({ avatars, logos }: { avatars: AvatarData[]; logos: Logo[] }) =
       <div className='relative mx-auto max-w-7xl space-y-12 px-4 sm:px-6 md:space-y-16 lg:space-y-24 lg:px-8'>
         <div className='space-y-4 text-center'>
           <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>
-            <span className='text-muted-foreground mb-2 block text-sm font-normal uppercase tracking-wider'>Our story</span>
-            How Apargo{' '}
-            <span className='relative'>
-              started
-              <span className='bg-primary absolute bottom-0 left-0 h-px w-full max-sm:hidden'></span>
-            </span>
+            <span className='text-muted-foreground mb-2 block text-sm font-normal uppercase tracking-wider'>{badgeText}</span>
+            {firstWords}{' '}
+            {lastWord && (
+              <span className='relative'>
+                {lastWord}
+                <span className='bg-primary absolute bottom-0 left-0 h-px w-full max-sm:hidden'></span>
+              </span>
+            )}
           </h2>
           <p className='text-muted-foreground mx-auto max-w-4xl text-xl'>
-            Apargo was built for founders who needed real execution — not endless presentations, delays and outsourced confusion.
+            {description}
           </p>
 
 
@@ -191,28 +225,21 @@ const AboutUs = ({ avatars, logos }: { avatars: AvatarData[]; logos: Logo[] }) =
 
         <div className='grid grid-cols-1 items-center gap-16 lg:grid-cols-2'>
           <img
-            src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/about-us/image-45.png'
-            alt='Image'
+            src={imageUrl}
+            alt='About Story'
             className='h-full max-h-91 min-h-52 w-full rounded-lg object-cover'
           />
 
           <div className='space-y-6 max-lg:text-center'>
-            <h3 className='text-xl font-semibold'>
-              We build products the way ambitious teams actually need them built.
-            </h3>
+            {contentHeading && (
+              <h3 className='text-xl font-semibold'>
+                {contentHeading}
+              </h3>
+            )}
             <div className='text-muted-foreground space-y-4'>
-              <p>
-                Apargo started with one belief: growing businesses don’t fail because of ideas — they fail because execution is slow.
-              </p>
-              <p>
-                So we built a senior-heavy engineering team focused on shipping fast, solving real problems and working closely with founders.
-              </p>
-              <p>
-                As our clients grew, we faced the same operational challenges they did — especially around WhatsApp at scale. That led us to build AI Greentick, now used by businesses across India and beyond.
-              </p>
-              <p>
-                Today Apargo builds custom software for ambitious companies while also running and scaling our own SaaS products.
-              </p>
+              {paragraphs.map((p, idx) => (
+                <p key={idx}>{p}</p>
+              ))}
             </div>
 
           </div>

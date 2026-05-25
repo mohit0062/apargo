@@ -9,6 +9,7 @@ import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer
 import HowWeWork from '@/components/shadcn-studio/blocks/how-we-work/how-we-work'
 import Team from '@/components/shadcn-studio/blocks/team-section-12/team-section-12'
 import type { TeamMember } from '@/components/shadcn-studio/blocks/team-section-12/team-section-12'
+import { getSiteSection } from '@/utils/cms'
 
 export const metadata: Metadata = {
   title: 'About Apargo - The Team Behind AI Greentick',
@@ -152,15 +153,36 @@ const teamMember: TeamMember[] = [
   }
 ]
 
-const AboutPage = () => {
+const AboutPage = async () => {
+  const aboutData = await getSiteSection('about_page')
+  const { hero, story, team } = aboutData
+
   return (
     <div className='flex min-h-screen flex-col'>
       <SiteNavbar />
       <main className='flex-1 pt-[4.5rem]'>
-        <AboutUs18 stats={stats} />
-        <AboutUs11 avatars={avatars} logos={logos} />
+        <AboutUs18 
+          stats={hero.stats} 
+          badgeText={hero.badgeText}
+          heading={hero.heading}
+          description={hero.description}
+        />
+        <AboutUs11 
+          avatars={avatars} 
+          logos={logos} 
+          badgeText={story.badgeText}
+          heading={story.heading}
+          description={story.description}
+          imageUrl={story.imageUrl}
+          contentHeading={story.contentHeading}
+          paragraphs={story.paragraphs}
+        />
         <BentoGrid />
-        <Team teamMember={teamMember} />
+        <Team 
+          teamMember={team.members} 
+          heading={team.heading}
+          description={team.description}
+        />
         <HowWeWork />
         <CTA />
       </main>

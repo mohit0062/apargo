@@ -7,16 +7,17 @@ import {
 } from 'lucide-react'
 
 import SiteNavbar from '@/components/site-navbar'
+import { getSiteSection, getLucideIcon } from '@/utils/cms'
 import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer-component-05'
 
-import HeroSection from '@/components/shadcn-studio/blocks/hero-section-03-cloud/hero-section-03-cloud'
+import HeroSection from '@/components/shadcn-studio/blocks/hero-section-03/hero-section-03'
 import Features01 from '@/components/shadcn-studio/blocks/features-section-01-cloud/features-section-01-cloud'
 import CompareUILib from '@/components/shadcn-studio/blocks/compare-ui-lib-cloud/compare-ui-lib-cloud'
 import AppIntegration from '@/components/shadcn-studio/blocks/app-integration-03-cloud/app-integration-03-cloud'
 import CTA from '@/components/shadcn-studio/blocks/cta-section-11-cloud/cta-section-11-cloud'
 import FAQ from '@/components/shadcn-studio/blocks/faq-component-09/faq-component-09'
 
-import type { AvatarItem } from '@/components/shadcn-studio/blocks/hero-section-03-cloud/hero-section-03-cloud'
+import type { AvatarItem } from '@/components/shadcn-studio/blocks/hero-section-03/hero-section-03'
 
 export const metadata = {
   title: 'Cloud, DevOps & Managed Hosting Services | Apargo',
@@ -179,15 +180,43 @@ const faqItems = [
   }
 ]
 
-const CloudDevOpsPage = () => {
+import { ServicePageSchema } from '@/components/json-ld'
+
+const CloudDevOpsPage = async () => {
+  const data = await getSiteSection('service_cloud-devops')
   return (
     <div className='flex min-h-screen flex-col'>
+      <ServicePageSchema
+        data={data}
+        serviceName="Cloud, DevOps & Managed Hosting Services"
+        fallbackDescription="AWS, GCP, Azure cloud setup, CI/CD, infrastructure-as-code, monitoring and on-call."
+      />
       <SiteNavbar />
 
       <main className='flex flex-1 flex-col'>
-        <HeroSection avatars={avatars} />
+        <HeroSection
+          avatars={avatars}
+          badgeText={data.hero?.badgeText}
+          subtitleText={data.hero?.subtitleText}
+          title={data.hero?.title}
+          description={data.hero?.description}
+          primaryBtnText={data.hero?.primaryBtnText}
+          primaryBtnHref={data.hero?.primaryBtnHref}
+          secondaryBtnText={data.hero?.secondaryBtnText}
+          secondaryBtnHref={data.hero?.secondaryBtnHref}
+        />
 
-        <Features01 featuresList={featuresListFeaturesSection01} />
+        <Features01
+          featuresList={(data.featuresList || []).map((feature: any, idx: number) => {
+            const fallbackDesign = featuresListFeaturesSection01[idx] || featuresListFeaturesSection01[0] || {}
+            return {
+              ...fallbackDesign,
+              icon: getLucideIcon(feature.iconName),
+              title: feature.title,
+              description: feature.description
+            }
+          })}
+        />
 
         <CompareUILib stackData={stackData} />
 
@@ -195,7 +224,7 @@ const CloudDevOpsPage = () => {
 
         <CTA />
 
-        <FAQ faqItems={faqItems} />
+        <FAQ faqItems={data.faqItems || faqItems} />
       </main>
 
       <Footer />

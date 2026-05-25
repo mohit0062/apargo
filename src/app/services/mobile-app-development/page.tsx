@@ -48,6 +48,7 @@ import { Fragment } from 'react'
 import { Badge } from '@/components/ui/badge'
 
 import SiteNavbar from '@/components/site-navbar'
+import { getSiteSection, getLucideIcon } from '@/utils/cms'
 import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer-component-05'
 
 import AppIntegration from '@/components/shadcn-studio/blocks/app-integration-03-mobile/app-integration-03-mobile'
@@ -58,9 +59,9 @@ import FAQ from '@/components/shadcn-studio/blocks/faq-component-09/faq-componen
 import Features01 from '@/components/shadcn-studio/blocks/features-section-01-mobile/features-section-01-mobile'
 import Features03 from '@/components/shadcn-studio/blocks/features-section-03-mobile/features-section-03-mobile'
 import GrowLogo from '@/assets/svg/grow-logo'
-import HeroSection from '@/components/shadcn-studio/blocks/hero-section-03-mobile/hero-section-03-mobile'
+import HeroSection from '@/components/shadcn-studio/blocks/hero-section-03/hero-section-03'
 import HiveStudioLogo from '@/assets/svg/hive-studio-logo'
-import type { AvatarItem } from '@/components/shadcn-studio/blocks/hero-section-03-mobile/hero-section-03-mobile'
+import type { AvatarItem } from '@/components/shadcn-studio/blocks/hero-section-03/hero-section-03'
 
 const avatars: AvatarItem[] = [
   {
@@ -297,15 +298,43 @@ const faqItems = [
   }
 ]
 
-const MobileAppDevelopmentPage = () => {
+import { ServicePageSchema } from '@/components/json-ld'
+
+const MobileAppDevelopmentPage = async () => {
+  const data = await getSiteSection('service_mobile-app-development')
   return (
     <div className='flex min-h-screen flex-col'>
+      <ServicePageSchema
+        data={data}
+        serviceName="Mobile App Development Services"
+        fallbackDescription="We build high-performance native and cross-platform mobile apps for iOS and Android."
+      />
       <SiteNavbar />
 
       <main className='flex flex-1 flex-col'>
-        <HeroSection avatars={avatars} />
+        <HeroSection
+          avatars={avatars}
+          badgeText={data.hero?.badgeText}
+          subtitleText={data.hero?.subtitleText}
+          title={data.hero?.title}
+          description={data.hero?.description}
+          primaryBtnText={data.hero?.primaryBtnText}
+          primaryBtnHref={data.hero?.primaryBtnHref}
+          secondaryBtnText={data.hero?.secondaryBtnText}
+          secondaryBtnHref={data.hero?.secondaryBtnHref}
+        />
 
-        <Features01 featuresList={featuresListFeaturesSection01} />
+        <Features01
+          featuresList={(data.featuresList || []).map((feature: any, idx: number) => {
+            const fallbackDesign = featuresListFeaturesSection01[idx] || featuresListFeaturesSection01[0] || {}
+            return {
+              ...fallbackDesign,
+              icon: getLucideIcon(feature.iconName),
+              title: feature.title,
+              description: feature.description
+            }
+          })}
+        />
 
         <AppIntegration integrations={integrations} />
 
@@ -315,7 +344,7 @@ const MobileAppDevelopmentPage = () => {
 
         <CTA />
 
-        <FAQ faqItems={faqItems} />
+        <FAQ faqItems={data.faqItems || faqItems} />
       </main>
 
       <Footer />

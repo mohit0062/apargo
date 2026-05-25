@@ -1,6 +1,6 @@
 import { MessagesSquareIcon } from 'lucide-react'
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, AccordionHeader } from '@/components/ui/accordion'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 
@@ -24,9 +24,7 @@ const FAQ = ({ faqItems }: { faqItems: FAQs }) => {
             <Accordion className='w-full rounded-lg border' defaultValue={['item-1']}>
               {faqItems.map((item, index) => (
                 <AccordionItem key={index} value={`item-${index + 1}`}>
-                  <AccordionHeader>
-                    <AccordionTrigger className='px-5 text-base'>{item.question}</AccordionTrigger>
-                  </AccordionHeader>
+                  <AccordionTrigger className='px-5 text-base'>{item.question}</AccordionTrigger>
                   <AccordionContent className='text-muted-foreground px-5 text-base'>{item.answer}</AccordionContent>
                 </AccordionItem>
               ))}

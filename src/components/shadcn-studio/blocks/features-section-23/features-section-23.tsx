@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { ArrowRightIcon } from 'lucide-react'
 
 import ProcessFlow from '@/components/shadcn-studio/blocks/features-section-23/process-flow'
@@ -53,13 +54,17 @@ const Features = ({ features }: { features: Process[] }) => {
               transition={{ duration: 0.5 }}
               delay={0.45}
             >
-              <PrimaryGrowButton size='lg' onClick={() => window.location.href='/contact'}>
-                Book a Free Consultation <ArrowRightIcon />{' '}
-              </PrimaryGrowButton>
-              <SecondaryGrowButton size='lg' className='group' onClick={() => window.location.href='/services'}>
-                View Services
-                <ArrowRightIcon className='transition-transform duration-200 group-hover:translate-x-0.5' />
-              </SecondaryGrowButton>
+              <Link href='/contact?intent=consultation'>
+                <PrimaryGrowButton size='lg'>
+                  Book a Free Consultation <ArrowRightIcon />{' '}
+                </PrimaryGrowButton>
+              </Link>
+              <Link href='/services'>
+                <SecondaryGrowButton size='lg' className='group'>
+                  View Services
+                  <ArrowRightIcon className='transition-transform duration-200 group-hover:translate-x-0.5' />
+                </SecondaryGrowButton>
+              </Link>
             </MotionPreset>
           </div>
 

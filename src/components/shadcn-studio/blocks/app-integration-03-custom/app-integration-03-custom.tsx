@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import {
   ChevronRightIcon,
@@ -104,7 +104,7 @@ const AppIntegration = ({ integrations }: { integrations: Integration }) => {
                 <Button
                   className='bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground rounded-full transition-all duration-300'
                   size='icon'
-                  render={<a href='#' />}
+                  render={<a href='/contact' />}
                 >
                   <ChevronRightIcon className='size-5' />
                 </Button>

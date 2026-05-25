@@ -27,7 +27,7 @@ const Features = ({ featuresList }: { featuresList: Features }) => {
           <p className='text-muted-foreground text-xl'>
             Whether you need native performance or cross-platform efficiency, we build mobile apps tailored to your users.
           </p>
-          <Button variant='outline' className='rounded-lg text-base shadow-none has-[>svg]:px-6' size='lg' render={<a href='#' />}>
+          <Button variant='outline' className='rounded-lg text-base shadow-none has-[>svg]:px-6' size='lg' render={<a href='/services/mobile-app-development' />}>
             See all platforms
             <ArrowRightIcon />
           </Button>

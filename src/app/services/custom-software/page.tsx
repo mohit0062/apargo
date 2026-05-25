@@ -11,16 +11,17 @@ import {
 } from 'lucide-react'
 
 import SiteNavbar from '@/components/site-navbar'
+import { getSiteSection, getLucideIcon } from '@/utils/cms'
 import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer-component-05'
 
-import HeroSection from '@/components/shadcn-studio/blocks/hero-section-03-custom/hero-section-03-custom'
+import HeroSection from '@/components/shadcn-studio/blocks/hero-section-03/hero-section-03'
 import Features01 from '@/components/shadcn-studio/blocks/features-section-01-custom/features-section-01-custom'
 import AppIntegration from '@/components/shadcn-studio/blocks/app-integration-03-custom/app-integration-03-custom'
 import Features03 from '@/components/shadcn-studio/blocks/features-section-03-custom/features-section-03-custom'
 import CTA from '@/components/shadcn-studio/blocks/cta-section-11-custom/cta-section-11-custom'
 import FAQ from '@/components/shadcn-studio/blocks/faq-component-09/faq-component-09'
 
-import type { AvatarItem } from '@/components/shadcn-studio/blocks/hero-section-03-custom/hero-section-03-custom'
+import type { AvatarItem } from '@/components/shadcn-studio/blocks/hero-section-03/hero-section-03'
 
 export const metadata = {
   title: 'Custom Software Development Services | Apargo',
@@ -183,15 +184,43 @@ const faqItems = [
   }
 ]
 
-const CustomSoftwareDevelopmentPage = () => {
+import { ServicePageSchema } from '@/components/json-ld'
+
+const CustomSoftwareDevelopmentPage = async () => {
+  const data = await getSiteSection('service_custom-software')
   return (
     <div className='flex min-h-screen flex-col'>
+      <ServicePageSchema
+        data={data}
+        serviceName="Custom Software Development Services"
+        fallbackDescription="Bespoke software for businesses that have outgrown off-the-shelf tools. ERPs, CRMs, marketplaces."
+      />
       <SiteNavbar />
 
       <main className='flex flex-1 flex-col'>
-        <HeroSection avatars={avatars} />
+        <HeroSection
+          avatars={avatars}
+          badgeText={data.hero?.badgeText}
+          subtitleText={data.hero?.subtitleText}
+          title={data.hero?.title}
+          description={data.hero?.description}
+          primaryBtnText={data.hero?.primaryBtnText}
+          primaryBtnHref={data.hero?.primaryBtnHref}
+          secondaryBtnText={data.hero?.secondaryBtnText}
+          secondaryBtnHref={data.hero?.secondaryBtnHref}
+        />
 
-        <Features01 featuresList={featuresListFeaturesSection01} />
+        <Features01
+          featuresList={(data.featuresList || []).map((feature: any, idx: number) => {
+            const fallbackDesign = featuresListFeaturesSection01[idx] || featuresListFeaturesSection01[0] || {}
+            return {
+              ...fallbackDesign,
+              icon: getLucideIcon(feature.iconName),
+              title: feature.title,
+              description: feature.description
+            }
+          })}
+        />
 
         <AppIntegration integrations={integrations} />
 
@@ -199,7 +228,7 @@ const CustomSoftwareDevelopmentPage = () => {
 
         <CTA />
 
-        <FAQ faqItems={faqItems} />
+        <FAQ faqItems={data.faqItems || faqItems} />
       </main>
 
       <Footer />

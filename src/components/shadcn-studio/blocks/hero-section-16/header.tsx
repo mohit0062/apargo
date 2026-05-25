@@ -45,7 +45,7 @@ const Header = ({ navigationData, className }: HeaderProps) => {
     >
       <div className='mx-auto flex h-full max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8'>
         {/* Logo */}
-        <a href='#'>
+        <a href='/'>
           <Logo className='gap-3' />
         </a>
 
@@ -54,14 +54,14 @@ const Header = ({ navigationData, className }: HeaderProps) => {
 
         {/* Login Button */}
         <div className='flex items-center gap-6 max-lg:hidden'>
-          <Button className='rounded-lg' onClick={() => window.location.href='/contact'}>
+          <Button className='rounded-lg' render={<a href='/contact' />}>
             Book a Call
           </Button>
         </div>
 
         {/* Navigation for small screens */}
         <div className='flex gap-4 lg:hidden'>
-          <Button className='rounded-lg' onClick={() => window.location.href='/contact'}>
+          <Button className='rounded-lg' render={<a href='/contact' />}>
             Book a Call
           </Button>
 

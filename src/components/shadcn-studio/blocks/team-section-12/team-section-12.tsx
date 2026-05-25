@@ -21,10 +21,31 @@ export type TeamMember = {
 
 type TeamMemberItem = {
   teamMember: TeamMember[]
+  heading?: string
+  description?: string
 }
 
-const Team = ({ teamMember }: TeamMemberItem) => {
+const Team = ({
+  teamMember,
+  heading = "Introducing Our Team , the *Creators* Behind the Magic ✨",
+  description = "Driven by purpose, our team blends creativity, innovation, and expertise to shape remarkable outcomes."
+}: TeamMemberItem) => {
   const types = [...new Set(teamMember.map(member => member.type))]
+
+  const renderHeadingWithHighlight = (text: string) => {
+    const parts = text.split(/\*(.*?)\*/g)
+    return parts.map((part, index) => {
+      if (index % 2 === 1) {
+        return (
+          <span key={index} className='relative z-10'>
+            <span>{part}</span>
+            <span className='bg-primary absolute bottom-1 left-0 -z-10 h-px w-full' aria-hidden='true' />
+          </span>
+        )
+      }
+      return part
+    })
+  }
 
   return (
     <section className='relative py-8 sm:py-16 lg:py-24 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:-z-1 before:h-60 before:bg-linear-to-b before:from-primary/10 before:via-transparent before:to-transparent after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:-z-1 after:h-60 after:bg-linear-to-t after:from-primary/10 after:via-transparent after:to-transparent'>
@@ -39,12 +60,7 @@ const Team = ({ teamMember }: TeamMemberItem) => {
             transition={{ duration: 0.5 }}
             delay={0.3}
           >
-            Introducing Our Team , the{' '}
-            <span className='relative z-10'>
-              <span>Creators</span>
-              <span className='bg-primary absolute bottom-1 left-0 -z-10 h-px w-full' aria-hidden='true' />
-            </span>{' '}
-            Behind the Magic ✨
+            {renderHeadingWithHighlight(heading)}
           </MotionPreset>
           <MotionPreset
             component='p'
@@ -55,7 +71,7 @@ const Team = ({ teamMember }: TeamMemberItem) => {
             transition={{ duration: 0.5 }}
             delay={0.2}
           >
-            Driven by purpose, our team blends creativity, innovation, and expertise to shape remarkable outcomes.
+            {description}
           </MotionPreset>
 
         </div>

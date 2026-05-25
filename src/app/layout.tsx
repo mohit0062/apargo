@@ -5,6 +5,7 @@ import "./globals.css";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { getSiteSection } from "@/utils/cms";
 import Script from "next/script";
+import { JsonLd } from "@/components/json-ld";
 
 const fontSans = Geist({
   variable: "--font-sans",
@@ -44,6 +45,13 @@ export async function generateMetadata(): Promise<Metadata> {
     keywords: keywords ? keywords.split(",").map((k: string) => k.trim()) : [],
     robots,
     metadataBase: new URL(canonicalBase),
+    icons: {
+      icon: [
+        { url: "/icon.svg", type: "image/svg+xml" }
+      ],
+      shortcut: "/icon.svg",
+      apple: "/icon.svg",
+    },
     openGraph: {
       title,
       description,
@@ -68,17 +76,56 @@ export async function generateMetadata(): Promise<Metadata> {
   return metadata
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const seo = await getSiteSection<any>('seo')
+  const title = seo.siteTitle || "Apargo"
+  const canonicalBase = seo.canonicalBase || "https://www.apargoinnovations.com"
+
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Apargo Innovations",
+    "url": canonicalBase,
+    "logo": `${canonicalBase}/group-2.svg`,
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "",
+      "contactType": "customer service",
+      "email": "hello@apargo.com"
+    },
+    "sameAs": [
+      "https://www.linkedin.com/company/apargoinnovations",
+      "https://twitter.com/apargo"
+    ]
+  }
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": title,
+    "url": canonicalBase,
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": `${canonicalBase}/search?q={search_term_string}`
+      },
+      "query-input": "required name=search_term_string"
+    }
+  }
+
   return (
     <html
       lang="en"
       className={`${fontSans.variable} ${fontMono.variable} ${fontDisplay.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans" suppressHydrationWarning>
+        <JsonLd data={organizationSchema} />
+        <JsonLd data={websiteSchema} />
         <TooltipProvider>{children}</TooltipProvider>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-KMP1EC31Y3"

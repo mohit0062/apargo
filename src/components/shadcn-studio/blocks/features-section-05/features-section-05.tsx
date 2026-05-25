@@ -1,34 +1,37 @@
 import type { ComponentType } from 'react'
 
+import { ArrowRightIcon } from 'lucide-react'
+
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 
-type Features = {
-  icon: ComponentType
+import { getLucideIcon } from '@/utils/icons'
+
+type FeatureItem = {
+  icon?: ComponentType
+  iconName?: string
   title: string
   description: string
-  goodFor: string
-  typicalLength: string
-}[]
+}
 
-const Features = ({ featuresList }: { featuresList: Features }) => {
+const Features = ({ featuresList, heading = "Who it's for", subheading }: { featuresList: FeatureItem[]; heading?: string; subheading?: string }) => {
   return (
-    <section className='py-8 sm:py-16 lg:py-24'>
+    <section className='bg-[#e5e2da] py-8 sm:py-16 lg:py-24'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         {/* Header */}
-        <div className='mx-auto mb-12 max-w-3xl space-y-4 text-center sm:mb-16'>
-          <p className='text-muted-foreground text-sm font-semibold uppercase tracking-wider'>Engagement models</p>
+        <div className='mx-auto mb-12 space-y-4 text-center sm:mb-16 lg:mb-24'>
           <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>
-            Three ways to work with us
+            {heading}
           </h2>
-          <p className='text-muted-foreground text-xl'>
-            Pick the model that fits your stage. Switch later if it stops fitting.
-          </p>
+          {subheading && (
+            <p className='text-muted-foreground text-xl'>{subheading}</p>
+          )}
         </div>
 
-        <div className='grid grid-cols-1 gap-8 md:grid-cols-3'>
+        <div className='grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4'>
           {featuresList.map((item, index) => {
-            const IconComponent = item.icon
+            const IconComponent = item.icon || (item.iconName ? getLucideIcon(item.iconName) : getLucideIcon('Shapes'))
 
             return (
               <Card
@@ -45,20 +48,6 @@ const Features = ({ featuresList }: { featuresList: Features }) => {
                   <p className='text-muted-foreground group-hover:text-primary-foreground transition-colors duration-300'>
                     {item.description}
                   </p>
-                  <div className='mt-5 space-y-2 text-sm text-muted-foreground transition-colors duration-300 group-hover:text-primary-foreground'>
-                    <p>
-                      <span className='font-semibold text-card-foreground transition-colors duration-300 group-hover:text-primary-foreground'>
-                        Good for:
-                      </span>{' '}
-                      {item.goodFor}
-                    </p>
-                    <p>
-                      <span className='font-semibold text-card-foreground transition-colors duration-300 group-hover:text-primary-foreground'>
-                        Typical length:
-                      </span>{' '}
-                      {item.typicalLength}
-                    </p>
-                  </div>
                 </CardContent>
               </Card>
             )

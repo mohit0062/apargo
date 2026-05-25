@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { memo, type ComponentType, type MouseEvent, type ReactNode } from "react";
 import { motion, useMotionTemplate, useMotionValue, type Variants } from "framer-motion";
 import {
@@ -31,6 +32,7 @@ type ServiceCard = {
   title: string;
   description: string;
   cta: string;
+  href: string;
   icon: ComponentType<{ className?: string; strokeWidth?: number }>;
   visual: ReactNode;
   className: string;
@@ -65,60 +67,60 @@ function BentoCard({ service }: { service: ServiceCard }) {
 
   const Icon = service.icon;
 
+  const content = (
+    <Card
+      onMouseMove={handleMouseMove}
+      className={cn(
+        "group relative h-full rounded-[24px] border border-zinc-200/80 bg-white/90 py-0 shadow-[0_24px_70px_-36px_rgba(14,20,16,0.35)] transition-all duration-500 ease-out hover:-translate-y-1 hover:border-zinc-300 hover:shadow-[0_34px_90px_-44px_rgba(14,20,16,0.48)]",
+        service.featured && "bg-[linear-gradient(135deg,#ffffff_0%,#f9fbf7_56%,#eef7f0_100%)]"
+      )}
+    >
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute -inset-px rounded-[24px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background: useMotionTemplate`radial-gradient(420px circle at ${mouseX}px ${mouseY}px, ${glowColor}, transparent 68%)`,
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 rounded-[24px] bg-[linear-gradient(180deg,rgba(255,255,255,0.78),rgba(255,255,255,0)_42%)]"
+      />
+      <CardContent className="relative flex h-full flex-col px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex size-10 items-center justify-center rounded-2xl border border-zinc-200 bg-white shadow-[0_10px_30px_-18px_rgba(14,20,16,0.4)]">
+            <Icon className="size-5 text-zinc-900" strokeWidth={1.8} />
+          </div>
+          <div className="flex size-9 items-center justify-center rounded-full text-zinc-500 opacity-70 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:bg-zinc-100 group-hover:text-zinc-950 group-hover:opacity-100">
+            <ArrowUpRight className="size-4" />
+          </div>
+        </div>
+
+        <div className="mb-7 flex min-h-[150px] items-center">{service.visual}</div>
+
+        <div className="mt-auto">
+          <h3 className="max-w-[17rem] text-lg font-semibold leading-snug text-foreground sm:text-xl">
+            {service.title}
+          </h3>
+          <p className="mt-3 max-w-[39rem] text-sm leading-relaxed text-muted-foreground">
+            {service.description}
+          </p>
+          <div className="mt-5 flex items-center gap-1 text-sm font-medium text-primary hover:text-primary/80">
+            {service.cta}
+            <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+
   return (
-      <motion.div variants={itemVariants} className={cn("min-h-[420px]", service.className)}>
-      <Card
-        onMouseMove={handleMouseMove}
-        className={cn(
-          "group relative h-full rounded-[24px] border border-zinc-200/80 bg-white/90 py-0 shadow-[0_24px_70px_-36px_rgba(14,20,16,0.35)] transition-all duration-500 ease-out hover:-translate-y-1 hover:border-zinc-300 hover:shadow-[0_34px_90px_-44px_rgba(14,20,16,0.48)]",
-          service.featured && "bg-[linear-gradient(135deg,#ffffff_0%,#f9fbf7_56%,#eef7f0_100%)]"
-        )}
-      >
-        <motion.div
-          aria-hidden="true"
-          className="pointer-events-none absolute -inset-px rounded-[24px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-          style={{
-            background: useMotionTemplate`radial-gradient(420px circle at ${mouseX}px ${mouseY}px, ${glowColor}, transparent 68%)`,
-          }}
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 rounded-[24px] bg-[linear-gradient(180deg,rgba(255,255,255,0.78),rgba(255,255,255,0)_42%)]"
-        />
-        <CardContent className="relative flex h-full flex-col px-5 py-5 sm:px-6 sm:py-6 lg:px-7 lg:py-7">
-          <div className="mb-6 flex items-center justify-between">
-            <div className="flex size-10 items-center justify-center rounded-2xl border border-zinc-200 bg-white shadow-[0_10px_30px_-18px_rgba(14,20,16,0.4)]">
-              <Icon className="size-5 text-zinc-900" strokeWidth={1.8} />
-            </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              aria-label={service.cta}
-              className="size-9 rounded-full text-zinc-500 opacity-70 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:bg-zinc-100 group-hover:text-zinc-950 group-hover:opacity-100"
-            >
-              <ArrowUpRight className="size-4" />
-            </Button>
-          </div>
-
-          <div className="mb-7 flex min-h-[150px] items-center">{service.visual}</div>
-
-          <div className="mt-auto">
-            <h3 className="max-w-[17rem] text-lg font-semibold leading-snug text-foreground sm:text-xl">
-              {service.title}
-            </h3>
-            <p className="mt-3 max-w-[39rem] text-sm leading-relaxed text-muted-foreground">
-              {service.description}
-            </p>
-            <Button
-              variant="link"
-              className="mt-5 h-auto px-0 text-sm font-medium text-primary hover:text-primary/80"
-            >
-              {service.cta}
-              <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+    <motion.div variants={itemVariants} className={cn("min-h-[420px]", service.className)}>
+      {service.href ? (
+        <Link href={service.href} className="block h-full cursor-pointer outline-none ring-0">
+          {content}
+        </Link>
+      ) : content}
     </motion.div>
   );
 }
@@ -731,6 +733,7 @@ const services: ServiceCard[] = [
     description:
       "Web platforms, dashboards, admin panels, internal tools. Built from scratch on a modern stack - React, Next.js, Node, Python - and handed over with full code ownership.",
     cta: "Explore Custom Software",
+    href: "/services/custom-software",
     icon: Layers3,
     visual: <ProductPreview />,
     className: "lg:col-span-6",
@@ -742,6 +745,7 @@ const services: ServiceCard[] = [
     description:
       "iOS and Android apps using React Native and Flutter, or fully native when you need it. Push notifications, offline-first, payments, deep linking - the boring stuff that actually matters.",
     cta: "Explore Mobile App Development",
+    href: "/services/mobile-app-development",
     icon: Smartphone,
     visual: <MobilePreview />,
     className: "lg:col-span-3",
@@ -752,6 +756,7 @@ const services: ServiceCard[] = [
     description:
       "Chatbots, document AI, recommendation engines, workflow automation. We use LLMs where they save real time and money, and skip them where they don't.",
     cta: "Explore AI Services",
+    href: "/services/ai-machine-learning",
     icon: Bot,
     visual: <AutomationPreview />,
     className: "lg:col-span-3",
@@ -762,6 +767,7 @@ const services: ServiceCard[] = [
     description:
       "We don't just build for clients. We build, run and scale our own SaaS - like AI Greentick. The team you hire actually runs the production playbook, not just the project plan.",
     cta: "See Our Products",
+    href: "/products",
     icon: Boxes,
     visual: <SaasPreview />,
     className: "lg:col-span-7",
@@ -772,6 +778,7 @@ const services: ServiceCard[] = [
     description:
       "Fast, secure, scalable hosting infrastructure with CI/CD pipelines, server optimization, monitoring, backups, CDN setup, and production-grade deployment workflows.",
     cta: "Explore Hosting Solutions",
+    href: "/services/cloud-devops",
     icon: Database,
     visual: <CloudPreview />,
     className: "lg:col-span-5",
@@ -781,7 +788,7 @@ const services: ServiceCard[] = [
 
 export function BentoGrid() {
   return (
-    <section className="relative overflow-hidden bg-[#fafafa] py-24 sm:py-28 lg:py-32">
+    <section className="relative overflow-hidden bg-[#fafafa] py-12 sm:py-28 lg:py-32">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-[48%] h-[620px] w-[min(980px,92vw)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_center,rgba(26,135,84,0.13),rgba(58,111,165,0.07)_38%,transparent_70%)] blur-2xl"

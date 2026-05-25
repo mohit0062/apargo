@@ -113,9 +113,9 @@ const TotalEarningCard = ({ className }: { className?: string }) => {
           </div>
         </div>
         <DropdownMenu>
-          <DropdownMenuTrigger className='hover:bg-accent hover:text-accent-foreground text-muted-foreground flex size-6 items-center justify-center rounded-full'>
-              <EllipsisVerticalIcon className="size-4" />
-              <span className='sr-only'>Menu</span>
+          <DropdownMenuTrigger className='text-muted-foreground size-6 rounded-full hover:bg-accent inline-flex items-center justify-center transition-colors'>
+            <EllipsisVerticalIcon className='size-4' />
+            <span className='sr-only'>Menu</span>
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
             <DropdownMenuGroup>

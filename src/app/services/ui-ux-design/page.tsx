@@ -7,16 +7,17 @@ import {
 } from 'lucide-react'
 
 import SiteNavbar from '@/components/site-navbar'
+import { getSiteSection, getLucideIcon } from '@/utils/cms'
 import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer-component-05'
 
-import HeroSection from '@/components/shadcn-studio/blocks/hero-section-03-uiux/hero-section-03-uiux'
+import HeroSection from '@/components/shadcn-studio/blocks/hero-section-03/hero-section-03'
 import Features01 from '@/components/shadcn-studio/blocks/features-section-01-uiux/features-section-01-uiux'
 import CompareUILib from '@/components/shadcn-studio/blocks/compare-ui-lib-uiux/compare-ui-lib-uiux'
 import AppIntegration from '@/components/shadcn-studio/blocks/app-integration-03-uiux/app-integration-03-uiux'
 import CTA from '@/components/shadcn-studio/blocks/cta-section-11-uiux/cta-section-11-uiux'
 import FAQ from '@/components/shadcn-studio/blocks/faq-component-09/faq-component-09'
 
-import type { AvatarItem } from '@/components/shadcn-studio/blocks/hero-section-03-uiux/hero-section-03-uiux'
+import type { AvatarItem } from '@/components/shadcn-studio/blocks/hero-section-03/hero-section-03'
 
 export const metadata = {
   title: 'UI/UX Design Services — Product, Mobile, SaaS | Apargo',
@@ -159,15 +160,43 @@ const faqItems = [
   }
 ]
 
-const UIUXDesignPage = () => {
+import { ServicePageSchema } from '@/components/json-ld'
+
+const UIUXDesignPage = async () => {
+  const data = await getSiteSection('service_ui-ux-design')
   return (
     <div className='flex min-h-screen flex-col'>
+      <ServicePageSchema
+        data={data}
+        serviceName="UI/UX Design Services"
+        fallbackDescription="Product, mobile and dashboard UX design by Apargo. Design systems, prototypes and shipped product UI — designed to be built, not just to look good in a portfolio."
+      />
       <SiteNavbar />
 
       <main className='flex flex-1 flex-col'>
-        <HeroSection avatars={avatars} />
+        <HeroSection
+          avatars={avatars}
+          badgeText={data.hero?.badgeText}
+          subtitleText={data.hero?.subtitleText}
+          title={data.hero?.title}
+          description={data.hero?.description}
+          primaryBtnText={data.hero?.primaryBtnText}
+          primaryBtnHref={data.hero?.primaryBtnHref}
+          secondaryBtnText={data.hero?.secondaryBtnText}
+          secondaryBtnHref={data.hero?.secondaryBtnHref}
+        />
 
-        <Features01 featuresList={featuresListFeaturesSection01} />
+        <Features01
+          featuresList={(data.featuresList || []).map((feature: any, idx: number) => {
+            const fallbackDesign = featuresListFeaturesSection01[idx] || featuresListFeaturesSection01[0] || {}
+            return {
+              ...fallbackDesign,
+              icon: getLucideIcon(feature.iconName),
+              title: feature.title,
+              description: feature.description
+            }
+          })}
+        />
 
         <CompareUILib stackData={stackData} />
 
@@ -175,7 +204,7 @@ const UIUXDesignPage = () => {
 
         <CTA />
 
-        <FAQ faqItems={faqItems} />
+        <FAQ faqItems={data.faqItems || faqItems} />
       </main>
 
       <Footer />

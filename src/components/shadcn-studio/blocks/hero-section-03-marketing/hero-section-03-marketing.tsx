@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+﻿import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
@@ -58,10 +58,10 @@ const HeroSection = ({ avatars }: { avatars: AvatarItem[] }) => {
               transition={{ duration: 0.5, ease: 'easeOut' }}
               className='flex flex-wrap items-center gap-4'
             >
-              <Button size='lg' render={<a href='#' />}>
+              <Button size='lg' render={<a href='/contact?intent=consultation' />}>
                 Get a Marketing Audit
               </Button>
-              <Button size='lg' className='bg-primary/10 hover:bg-primary/20 text-primary' render={<a href='#' />}>
+              <Button size='lg' className='bg-primary/10 hover:bg-primary/20 text-primary' render={<a href='/case-studies' />}>
                 See Marketing Case Studies
               </Button>
             </MotionPreset>

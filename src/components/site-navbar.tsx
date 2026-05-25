@@ -217,22 +217,58 @@ const navGroups: NavGroup[] = [
   },
 ]
 
-const standaloneLinks: NavLink[] = [
-  { title: "Home", href: "/", icon: HomeIcon },
-  { title: "Case Studies", href: "/case-studies", icon: BookOpenTextIcon },
-  { title: "Technologies", href: "/technologies", icon: CpuIcon },
-  { title: "Blog", href: "/blog", icon: BookOpenTextIcon },
-  { title: "Careers", href: "/careers", icon: BriefcaseBusinessIcon },
-  { title: "Contact", href: "/contact", icon: MailIcon },
+const DEFAULT_STANDALONE_LINKS = [
+  { title: "Home", href: "/" },
+  { title: "Technologies", href: "/technologies" },
+  { title: "Blog", href: "/blog" },
+  { title: "Careers", href: "/careers" },
+  { title: "Contact", href: "/contact" },
 ]
 
-const orderedMobileNav: Array<NavLink | NavGroup> = [
-  standaloneLinks[0],
-  navGroups[0],
-  navGroups[1],
-  navGroups[2],
-  ...standaloneLinks.slice(1),
-]
+const iconMap: Record<string, LucideIcon> = {
+  home: HomeIcon,
+  technology: CpuIcon,
+  technologies: CpuIcon,
+  blog: BookOpenTextIcon,
+  career: BriefcaseBusinessIcon,
+  careers: BriefcaseBusinessIcon,
+  contact: MailIcon,
+  service: Code2Icon,
+  services: Code2Icon,
+  about: Building2Icon,
+  product: SquareStackIcon,
+  products: SquareStackIcon,
+  portfolio: PaletteIcon,
+  team: GraduationCapIcon,
+}
+
+function getIconForLink(title: string, href: string): LucideIcon {
+  const t = title.toLowerCase().trim()
+  const h = href.toLowerCase().trim()
+
+  if (iconMap[t]) return iconMap[t]
+  if (t.includes("home")) return HomeIcon
+  if (t.includes("tech")) return CpuIcon
+  if (t.includes("blog") || t.includes("news")) return BookOpenTextIcon
+  if (t.includes("career") || t.includes("job") || t.includes("work")) return BriefcaseBusinessIcon
+  if (t.includes("contact") || t.includes("mail") || t.includes("support")) return MailIcon
+  if (t.includes("about") || t.includes("team") || t.includes("us")) return Building2Icon
+  if (t.includes("product") || t.includes("saas") || t.includes("app")) return SquareStackIcon
+  if (t.includes("service") || t.includes("work") || t.includes("offer")) return Code2Icon
+  if (t.includes("portfolio") || t.includes("project")) return PaletteIcon
+
+  // Also check href prefix patterns
+  if (h === "/") return HomeIcon
+  if (h.includes("blog")) return BookOpenTextIcon
+  if (h.includes("career")) return BriefcaseBusinessIcon
+  if (h.includes("contact")) return MailIcon
+  if (h.includes("about")) return Building2Icon
+  if (h.includes("product")) return SquareStackIcon
+  if (h.includes("service")) return Code2Icon
+  if (h.includes("tech")) return CpuIcon
+
+  return BlocksIcon
+}
 
 function isActive(pathname: string, href: string) {
   if (href === "/") {
@@ -344,18 +380,29 @@ function DropdownItem({ item }: { item: NavLink }) {
   )
 }
 
-function DesktopNavigation() {
+function DesktopNavigation({ links }: { links: Array<{ title: string; href: string }> }) {
   const pathname = usePathname()
+
+  const mappedLinks: NavLink[] = (links || DEFAULT_STANDALONE_LINKS).map((link) => ({
+    title: link.title,
+    href: link.href,
+    icon: getIconForLink(link.title, link.href)
+  }))
+
+  if (mappedLinks.length === 0) return null
+
+  const firstLink = mappedLinks[0]
+  const otherLinks = mappedLinks.slice(1)
 
   return (
     <nav className="hidden min-w-0 flex-1 justify-center xl:flex" aria-label="Main navigation">
       <NavigationMenu align="center" className="max-w-none flex-none">
         <NavigationMenuList className="gap-0.5 rounded-full border border-border/70 bg-card/70 p-1 shadow-sm">
-          <DesktopLink item={standaloneLinks[0]} active={isActive(pathname, standaloneLinks[0].href)} />
+          <DesktopLink item={firstLink} active={isActive(pathname, firstLink.href)} />
           {navGroups.map((group) => (
             <DesktopDropdown key={group.title} group={group} active={isActive(pathname, group.href)} />
           ))}
-          {standaloneLinks.slice(1).map((item) => (
+          {otherLinks.map((item) => (
             <DesktopLink key={item.title} item={item} active={isActive(pathname, item.href)} />
           ))}
         </NavigationMenuList>
@@ -450,9 +497,27 @@ function MobileNavGroup({
   )
 }
 
-function MobileNavigation() {
+function MobileNavigation({ config }: { config: any }) {
   const [open, setOpen] = useState(false)
   const closeMenu = () => setOpen(false)
+
+  const rawLinks = config.standaloneLinks || DEFAULT_STANDALONE_LINKS
+  const linksWithIcons = rawLinks.map((link: any) => ({
+    title: link.title,
+    href: link.href,
+    icon: getIconForLink(link.title, link.href)
+  }))
+
+  const firstLink = linksWithIcons[0] || { title: "Home", href: "/", icon: HomeIcon }
+  const otherLinks = linksWithIcons.slice(1)
+
+  const orderedMobileNav: Array<NavLink | NavGroup> = [
+    firstLink,
+    navGroups[0],
+    navGroups[1],
+    navGroups[2],
+    ...otherLinks,
+  ]
 
   return (
     <div className="xl:hidden">
@@ -476,10 +541,12 @@ function MobileNavigation() {
               Main navigation links and consultation actions.
             </SheetDescription>
             <Link href="/" className="w-fit" onClick={closeMenu}>
-              <Logo />
-              <span className="mt-2 block text-xs font-medium text-muted-foreground">
-                Product Engineering & AI Services
-              </span>
+              <div className="flex items-center gap-2">
+                <Logo src={config.logoImageUrl} />
+                {config.logoText && config.logoText !== "Apargo" && (
+                  <span className="text-lg font-bold tracking-tight text-foreground">{config.logoText}</span>
+                )}
+              </div>
             </Link>
           </SheetHeader>
 
@@ -506,27 +573,31 @@ function MobileNavigation() {
           </div>
 
           <SheetFooter className="sticky bottom-0 border-t border-border/70 bg-background/95 p-4 backdrop-blur-xl">
-            <Link
-              href="/contact?intent=demo"
-              onClick={closeMenu}
-              className={cn(
-                buttonVariants({ variant: "outline", size: "lg" }),
-                "h-11 w-full rounded-full bg-card"
-              )}
-            >
-              Book a Demo
-            </Link>
-            <Link
-              href="/contact?intent=consultation"
-              onClick={closeMenu}
-              className={cn(
-                buttonVariants({ size: "lg" }),
-                "h-11 w-full rounded-full shadow-[0_12px_28px_rgba(26,135,84,0.18)] hover:bg-primary/90"
-              )}
-            >
-              Book a Free Consultation
-              <ArrowRightIcon className="size-4" />
-            </Link>
+            {config.demoBtnText && (
+              <Link
+                href={config.demoBtnLink || "/contact?intent=demo"}
+                onClick={closeMenu}
+                className={cn(
+                  buttonVariants({ variant: "outline", size: "lg" }),
+                  "h-11 w-full rounded-full bg-card"
+                )}
+              >
+                {config.demoBtnText}
+              </Link>
+            )}
+            {config.consultBtnText && (
+              <Link
+                href={config.consultBtnLink || "/contact?intent=consultation"}
+                onClick={closeMenu}
+                className={cn(
+                  buttonVariants({ size: "lg" }),
+                  "h-11 w-full rounded-full shadow-[0_12px_28px_rgba(26,135,84,0.18)] hover:bg-primary/90"
+                )}
+              >
+                {config.consultBtnText}
+                <ArrowRightIcon className="size-4" />
+              </Link>
+            )}
           </SheetFooter>
         </SheetContent>
       </Sheet>
@@ -534,7 +605,56 @@ function MobileNavigation() {
   )
 }
 
-export function SiteNavbar({ className }: { className?: string }) {
+export interface SiteNavbarProps {
+  className?: string
+  initialNavbarData?: {
+    logoText?: string
+    logoImageUrl?: string
+    demoBtnText?: string
+    demoBtnLink?: string
+    consultBtnText?: string
+    consultBtnLink?: string
+    standaloneLinks?: Array<{ title: string; href: string }>
+  }
+}
+
+export function SiteNavbar({ className, initialNavbarData }: SiteNavbarProps) {
+  const [navbarConfig, setNavbarConfig] = useState(() => ({
+    logoText: initialNavbarData?.logoText || "Apargo",
+    logoImageUrl: initialNavbarData?.logoImageUrl || "/group-2.svg",
+    demoBtnText: initialNavbarData?.demoBtnText || "Book a Demo",
+    demoBtnLink: initialNavbarData?.demoBtnLink || "/contact?intent=demo",
+    consultBtnText: initialNavbarData?.consultBtnText || "Book a Free Consultation",
+    consultBtnLink: initialNavbarData?.consultBtnLink || "/contact?intent=consultation",
+    standaloneLinks: initialNavbarData?.standaloneLinks || DEFAULT_STANDALONE_LINKS
+  }))
+
+  // Client-side fetch if server props not passed
+  useState(() => {
+    if (typeof window !== 'undefined' && !initialNavbarData) {
+      const fetchNavbarData = async () => {
+        try {
+          const { createClient } = await import('@/utils/supabase/client')
+          const supabase = createClient()
+          const { data } = await supabase
+            .from('site_sections')
+            .select('content')
+            .eq('key', 'navbar')
+            .single()
+          if (data && data.content) {
+            setNavbarConfig((prev) => ({
+              ...prev,
+              ...data.content,
+            }))
+          }
+        } catch (err) {
+          console.error('Error fetching navbar dynamically:', err)
+        }
+      }
+      fetchNavbarData()
+    }
+  })
+
   return (
     <header
       className={cn(
@@ -544,47 +664,55 @@ export function SiteNavbar({ className }: { className?: string }) {
     >
       <div className="mx-auto flex h-[4.5rem] max-w-[90rem] items-center gap-4 px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex shrink-0 items-center gap-3" aria-label="Apargo home">
-          <Logo className="shrink-0" />
-          <span className="hidden max-w-[8.75rem] text-[0.68rem] font-medium leading-4 text-muted-foreground 2xl:block">
-            Product Engineering & AI Services
-          </span>
+          <Logo className="shrink-0" src={navbarConfig.logoImageUrl} />
+          {navbarConfig.logoText && navbarConfig.logoText !== "Apargo" && (
+            <span className="text-xl font-bold tracking-tight text-foreground transition-all">
+              {navbarConfig.logoText}
+            </span>
+          )}
         </Link>
 
-        <DesktopNavigation />
+        <DesktopNavigation links={navbarConfig.standaloneLinks} />
 
         <div className="ml-auto hidden shrink-0 items-center gap-2 xl:flex">
-          <Link
-            href="/contact?intent=demo"
-            className={cn(
-              buttonVariants({ variant: "outline", size: "lg" }),
-              "h-10 rounded-full bg-card/80 px-4"
-            )}
-          >
-            Book a Demo
-          </Link>
-          <Link
-            href="/contact?intent=consultation"
-            className={cn(
-              buttonVariants({ size: "lg" }),
-              "h-10 rounded-full px-5 shadow-[0_12px_28px_rgba(26,135,84,0.18)] hover:bg-primary/90"
-            )}
-          >
-            Book a Free Consultation
-            <ArrowRightIcon className="size-4" />
-          </Link>
+          {navbarConfig.demoBtnText && (
+            <Link
+              href={navbarConfig.demoBtnLink || "/contact?intent=demo"}
+              className={cn(
+                buttonVariants({ variant: "outline", size: "lg" }),
+                "h-10 rounded-full bg-card/80 px-4"
+              )}
+            >
+              {navbarConfig.demoBtnText}
+            </Link>
+          )}
+          {navbarConfig.consultBtnText && (
+            <Link
+              href={navbarConfig.consultBtnLink || "/contact?intent=consultation"}
+              className={cn(
+                buttonVariants({ size: "lg" }),
+                "h-10 rounded-full px-5 shadow-[0_12px_28px_rgba(26,135,84,0.18)] hover:bg-primary/90"
+              )}
+            >
+              {navbarConfig.consultBtnText}
+              <ArrowRightIcon className="size-4" />
+            </Link>
+          )}
         </div>
 
         <div className="ml-auto flex items-center gap-2 xl:hidden">
-          <Link
-            href="/contact?intent=consultation"
-            className={cn(
-              buttonVariants({ size: "sm" }),
-              "hidden h-9 rounded-full px-3 shadow-[0_10px_22px_rgba(26,135,84,0.14)] hover:bg-primary/90 sm:inline-flex"
-            )}
-          >
-            Consultation
-          </Link>
-          <MobileNavigation />
+          {navbarConfig.consultBtnText && (
+            <Link
+              href={navbarConfig.consultBtnLink || "/contact?intent=consultation"}
+              className={cn(
+                buttonVariants({ size: "sm" }),
+                "hidden h-9 rounded-full px-3 shadow-[0_10px_22px_rgba(26,135,84,0.14)] hover:bg-primary/90 sm:inline-flex"
+              )}
+            >
+              {navbarConfig.consultBtnText.includes("Consultation") ? "Consultation" : navbarConfig.consultBtnText}
+            </Link>
+          )}
+          <MobileNavigation config={navbarConfig} />
         </div>
       </div>
     </header>

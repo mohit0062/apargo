@@ -45,7 +45,7 @@ const Header = ({ navigationData, className }: HeaderProps) => {
     >
       <div className='mx-auto flex h-full max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8'>
         {/* Logo */}
-        <a href='#'>
+        <a href='/'>
           <Logo className='gap-3' />
         </a>
 
@@ -55,13 +55,13 @@ const Header = ({ navigationData, className }: HeaderProps) => {
         {/* Login Button */}
 
         <Button className='rounded-lg max-lg:hidden'>
-          <a href='#'>Login</a>
+          <a href='/contact'>Contact Us</a>
         </Button>
 
         {/* Navigation for small screens */}
         <div className='flex gap-4 lg:hidden'>
           <Button className='rounded-lg'>
-            <a href='#'>Login</a>
+            <a href='/contact'>Contact Us</a>
           </Button>
 
           <HeroNavigation02SmallScreen navigationData={navigationData} logoName={'shadcn/studio'} />

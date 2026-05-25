@@ -45,6 +45,7 @@ import HiveStudioLogo from '@/assets/svg/hive-studio-logo'
 import type { AvatarItem } from '@/components/shadcn-studio/blocks/hero-section-03/hero-section-03'
 import SiteNavbar from '@/components/site-navbar'
 import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer-component-05'
+import { getSiteSection, getLucideIcon } from '@/utils/cms'
 
 const avatars: AvatarItem[] = [
   {
@@ -344,47 +345,52 @@ const faqItems = [
   }
 ]
 
-const HeroSection03Block = () => {
-  return (
-    <div className='relative'>
-      <SiteNavbar />
+import { ServicePageSchema } from '@/components/json-ld'
 
-      {/* Main Content */}
-      <main className='flex flex-col'>
-        <HeroSection avatars={avatars} />
-      </main>
-    </div>
-  )
-}
+const ServiceDetailPage = async () => {
+  const data = await getSiteSection('service_web-development')
 
-const FeaturesSection01Block = () => {
-  return <Features featuresList={featuresList} />
-}
+  const dynamicFeaturesList = (data.featuresList || []).map((feature: any, idx: number) => {
+    const fallbackDesign = featuresList[idx] || featuresList[0] || {}
+    return {
+      ...fallbackDesign,
+      icon: getLucideIcon(feature.iconName),
+      title: feature.title,
+      description: feature.description
+    }
+  })
 
-const Compare01Block = () => {
-  return <CompareUILib rowdata={webStackData} />
-}
-
-const FaqComponent09Block = () => {
-  return <FAQ faqItems={faqItems} />
-}
-
-const FooterComponent05Block = () => {
-  return <Footer />
-}
-
-const ServiceDetailPage = () => {
   return (
     <div className='flex flex-col min-h-screen'>
-      <HeroSection03Block />
+      <ServicePageSchema
+        data={data}
+        serviceName="Web Development Services"
+        fallbackDescription="From marketing sites to multi-tenant SaaS dashboards, we build web products on a modern stack."
+      />
+      <div className='relative'>
+        <SiteNavbar />
+        <main className='flex flex-col'>
+          <HeroSection
+            avatars={avatars}
+            badgeText={data.hero?.badgeText}
+            subtitleText={data.hero?.subtitleText}
+            title={data.hero?.title}
+            description={data.hero?.description}
+            primaryBtnText={data.hero?.primaryBtnText}
+            primaryBtnHref={data.hero?.primaryBtnHref}
+            secondaryBtnText={data.hero?.secondaryBtnText}
+            secondaryBtnHref={data.hero?.secondaryBtnHref}
+          />
+        </main>
+      </div>
 
-      <FeaturesSection01Block />
+      <Features featuresList={dynamicFeaturesList} />
 
-      <Compare01Block />
+      <CompareUILib rowdata={webStackData} />
 
-      <FaqComponent09Block />
+      <FAQ faqItems={data.faqItems || faqItems} />
 
-      <FooterComponent05Block />
+      <Footer />
     </div>
   )
 }

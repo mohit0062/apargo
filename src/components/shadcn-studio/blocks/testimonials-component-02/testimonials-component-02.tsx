@@ -76,9 +76,7 @@ const TestimonialsComponent = ({ testimonials }: TestimonialsComponentProps) => 
         </div>
         <div className='flex justify-center'>
           <a
-            href='#'
-            target='_blank'
-            rel='noopener noreferrer'
+            href='/about'
             className={cn(buttonVariants({ size: 'lg' }), 'rounded-lg text-base has-[>svg]:px-6')}
           >
             View All Reviews

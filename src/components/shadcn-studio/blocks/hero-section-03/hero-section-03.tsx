@@ -12,7 +12,29 @@ export type AvatarItem = {
   fallback: string
 }
 
-const HeroSection = ({ avatars }: { avatars: AvatarItem[] }) => {
+export interface HeroSectionProps {
+  avatars?: AvatarItem[]
+  badgeText?: string
+  subtitleText?: string
+  title?: string
+  description?: string
+  primaryBtnText?: string
+  primaryBtnHref?: string
+  secondaryBtnText?: string
+  secondaryBtnHref?: string
+}
+
+const HeroSection = ({
+  avatars = [],
+  badgeText = "Services",
+  subtitleText = "Web Development",
+  title = "Web Apps That Load Fast, Scale Clean and Don't Break on Friday Evening.",
+  description = "From marketing sites to multi-tenant SaaS dashboards, we build web products on a modern stack — and we operate one of our own (AI Greentick) in production every day.",
+  primaryBtnText = "Start a Project",
+  primaryBtnHref = "/contact?intent=consultation",
+  secondaryBtnText = "See Web Projects",
+  secondaryBtnHref = "/case-studies"
+}: HeroSectionProps) => {
   return (
     <section className='from-primary/20 to-background flex min-h-screen flex-1 flex-col bg-linear-to-bl to-50%'>
       <div className='mx-auto grid w-full max-w-7xl flex-1 gap-19 px-4 sm:px-6 lg:grid-cols-2 lg:px-8'>
@@ -25,10 +47,10 @@ const HeroSection = ({ avatars }: { avatars: AvatarItem[] }) => {
               transition={{ duration: 0.5, ease: 'easeOut' }}
               className='bg-muted flex items-center gap-2.5 rounded-full border px-4 py-1.5'
             >
-              <Badge variant='default'>Services</Badge>
-              <span className='text-muted-foreground text-sm font-medium'>Web Development</span>
+              <Badge variant='default'>{badgeText}</Badge>
+              <span className='text-muted-foreground text-sm font-medium'>{subtitleText}</span>
             </MotionPreset>
-
+ 
             <MotionPreset
               component='h1'
               fade
@@ -37,9 +59,9 @@ const HeroSection = ({ avatars }: { avatars: AvatarItem[] }) => {
               transition={{ duration: 0.5, ease: 'easeOut' }}
               className='text-3xl leading-[1.29167] font-bold text-balance sm:text-4xl'
             >
-              Web Apps That Load Fast, Scale Clean and Don&apos;t Break on Friday Evening.
+              {title}
             </MotionPreset>
-
+ 
             <MotionPreset
               component='p'
               fade
@@ -48,9 +70,9 @@ const HeroSection = ({ avatars }: { avatars: AvatarItem[] }) => {
               transition={{ duration: 0.5, ease: 'easeOut' }}
               className='text-muted-foreground text-lg'
             >
-              From marketing sites to multi-tenant SaaS dashboards, we build web products on a modern stack — and we operate one of our own (AI Greentick) in production every day.
+              {description}
             </MotionPreset>
-
+ 
             <MotionPreset
               fade
               slide
@@ -58,12 +80,16 @@ const HeroSection = ({ avatars }: { avatars: AvatarItem[] }) => {
               transition={{ duration: 0.5, ease: 'easeOut' }}
               className='flex flex-wrap items-center gap-4'
             >
-              <Button size='lg' render={<a href='#' />}>
-                Start a Project
-              </Button>
-              <Button size='lg' className='bg-primary/10 hover:bg-primary/20 text-primary' render={<a href='#' />}>
-                See Web Projects
-              </Button>
+              {primaryBtnText && (
+                <Button size='lg' render={<a href={primaryBtnHref} />}>
+                  {primaryBtnText}
+                </Button>
+              )}
+              {secondaryBtnText && (
+                <Button size='lg' className='bg-primary/10 hover:bg-primary/20 text-primary' render={<a href={secondaryBtnHref} />}>
+                  {secondaryBtnText}
+                </Button>
+              )}
             </MotionPreset>
           </div>
 

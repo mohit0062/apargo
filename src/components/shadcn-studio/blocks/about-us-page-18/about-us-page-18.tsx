@@ -16,9 +16,17 @@ type StatItem = {
 
 interface AboutUsProps {
   stats: StatItem[]
+  badgeText?: string
+  heading?: string
+  description?: string
 }
 
-const AboutUs = ({ stats }: AboutUsProps) => {
+const AboutUs = ({
+  stats,
+  badgeText = "ABOUT APARGO",
+  heading = "We Build and Ship What Others Only Plan",
+  description = "Apargo started as a small group of engineers tired of seeing good ideas die in slide decks. Today we build production software for clients across the world and run our own SaaS products in parallel."
+}: AboutUsProps) => {
   return (
     <section className='relative z-1 overflow-hidden py-8 sm:py-16 lg:py-24'>
       <div className='absolute -right-30 -bottom-10 -z-2 w-100 xl:w-150'>
@@ -43,21 +51,19 @@ const AboutUs = ({ stats }: AboutUsProps) => {
             <MotionPreset fade blur slide={{ direction: 'left', offset: 50 }} transition={{ duration: 0.7 }}>
               <div className='space-y-4'>
                 <Badge variant='outline' className='text-sm font-normal uppercase tracking-wider'>
-                  ABOUT APARGO
+                  {badgeText}
                 </Badge>
-                <h1 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>We Build and Ship What Others Only Plan</h1>
+                <h1 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>{heading}</h1>
                 <p className='text-muted-foreground text-xl leading-relaxed'>
-                  Apargo started as a small group of engineers tired of seeing good ideas die in slide decks. Today we build production software for clients across the world and run our own SaaS products in parallel.
+                  {description}
                 </p>
                 <Button
                   size='lg'
                   className='group relative overflow-hidden rounded-lg text-base before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.5)_50%,transparent_75%,transparent_100%)] before:bg-[length:250%_250%,100%_100%] before:bg-[position:200%_0,0_0] before:bg-no-repeat before:transition-[background-position_0s_ease] before:duration-1000 hover:before:bg-[position:-100%_0,0_0] has-[>svg]:px-6 w-fit dark:before:bg-[linear-gradient(45deg,transparent_25%,rgba(0,0,0,0.2)_50%,transparent_75%,transparent_100%)]'
-
+                  render={<a href='/about' />}
                 >
-                  <a href='#' className='flex items-center gap-2'>
-                    Read more
-                    <ArrowRightIcon className='size-4 transition-transform duration-200 group-hover:translate-x-0.5' />
-                  </a>
+                  Read more
+                  <ArrowRightIcon className='size-4 transition-transform duration-200 group-hover:translate-x-0.5' />
                 </Button>
               </div>
             </MotionPreset>

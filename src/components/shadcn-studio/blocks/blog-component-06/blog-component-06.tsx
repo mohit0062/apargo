@@ -57,13 +57,13 @@ const Blog = ({ blogCards }: { blogCards: BlogCard }) => {
               </div>
             </CardHeader>
             <CardContent>
-              <div className='border-primary flex items-center gap-2.5 rounded-xl border-2 px-3 py-2'>
+              <div className='border-primary flex flex-col items-stretch gap-2.5 rounded-xl border-2 px-3 py-2 sm:flex-row sm:items-center'>
                 <Input
                   type='email'
                   placeholder='Email address'
                   className='h-10 border-0 !bg-transparent shadow-none focus-visible:ring-0'
                 />
-                <Button size='lg' className='rounded-lg text-base'>
+                <Button size='lg' className='rounded-lg text-base w-full sm:w-auto'>
                   Subscribe
                 </Button>
               </div>

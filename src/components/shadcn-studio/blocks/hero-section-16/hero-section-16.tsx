@@ -1,3 +1,6 @@
+'use client'
+
+import { useState } from 'react'
 import { DollarSignIcon } from 'lucide-react'
 
 import WeeklyOverviewCard from '@/components/shadcn-studio/blocks/chart-weekly-overview'
@@ -22,9 +25,68 @@ const StatisticsCardData: StatisticsCardProps[] = [
   }
 ]
 
-const HeroSection = () => {
+export interface HeroSectionProps {
+  eyebrowText?: string
+  eyebrowTag?: string
+  heading?: string
+  description?: string
+  primaryBtnText?: string
+  emailPlaceholder?: string
+}
+
+const HeroSection = ({
+  eyebrowText: propEyebrowText,
+  eyebrowTag: propEyebrowTag,
+  heading: propHeading,
+  description: propDescription,
+  primaryBtnText: propPrimaryBtnText,
+  emailPlaceholder: propEmailPlaceholder,
+}: HeroSectionProps) => {
+  const [heroConfig, setHeroConfig] = useState(() => ({
+    eyebrowText: propEyebrowText || 'Apargo',
+    eyebrowTag: propEyebrowTag || 'Product Engineering & AI Services',
+    heading: propHeading || 'We Build Software That Growing Businesses Actually Use.',
+    description: propDescription || 'From custom platforms and mobile apps to in-house SaaS products like AI Greentick — Apargo is the engineering partner founders call when they want to ship fast, scale safely and stay technical.',
+    primaryBtnText: propPrimaryBtnText || 'Book a Free Consultation',
+    emailPlaceholder: propEmailPlaceholder || 'hello@apargo.com'
+  }))
+
+  // Dynamic client-side fetch if server prop is not passed
+  useState(() => {
+    const hasProps =
+      propEyebrowText ||
+      propEyebrowTag ||
+      propHeading ||
+      propDescription ||
+      propPrimaryBtnText ||
+      propEmailPlaceholder
+
+    if (typeof window !== 'undefined' && !hasProps) {
+      const fetchHeroData = async () => {
+        try {
+          const { createClient } = await import('@/utils/supabase/client')
+          const supabase = createClient()
+          const { data } = await supabase
+            .from('site_sections')
+            .select('content')
+            .eq('key', 'homepage_hero')
+            .single()
+          if (data && data.content) {
+            setHeroConfig((prev) => ({
+              ...prev,
+              ...data.content,
+            }))
+          }
+        } catch (err) {
+          console.error('Error fetching hero dynamically:', err)
+        }
+      }
+      fetchHeroData()
+    }
+  })
+
   return (
-    <section className='flex-1 pt-4 sm:pt-6 lg:pt-8'>
+    <section className='flex-1 overflow-hidden pt-4 sm:pt-6 lg:pt-8 max-sm:pb-0'>
       <div className='mx-auto flex max-w-7xl flex-col items-center gap-16 px-4 sm:px-6 lg:px-8'>
         {/* Hero Content */}
         <div className='flex flex-col items-center gap-6 text-center'>
@@ -32,12 +94,12 @@ const HeroSection = () => {
             fade
             slide={{ direction: 'up', offset: 50 }}
             transition={{ duration: 0.5 }}
-            className='bg-background border-primary flex w-fit items-center gap-2.5 rounded-full border px-2 py-1'
+            className='bg-background border-primary flex w-fit items-center gap-2.5 rounded-full border px-2.5 py-1'
           >
-            <span className='bg-primary text-primary-foreground rounded-full px-2 py-0.5 text-xs font-medium'>
-              Apargo
+            <span className='bg-primary text-primary-foreground rounded-full px-2 py-0.5 text-xs font-semibold'>
+              {heroConfig.eyebrowText}
             </span>
-            <span className='text-muted-foreground font-sans text-xs font-medium'>Product Engineering & AI Services</span>
+            <span className='text-muted-foreground font-sans text-xs font-medium'>{heroConfig.eyebrowTag}</span>
           </MotionPreset>
           <MotionPreset
             component='h1'
@@ -45,9 +107,9 @@ const HeroSection = () => {
             slide={{ direction: 'up', offset: 50 }}
             delay={0.3}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className='max-w-3xl text-3xl leading-[1.29167] font-bold sm:text-4xl lg:text-5xl'
+            className='max-w-3xl text-3xl leading-[1.29167] font-bold sm:text-4xl lg:text-5xl tracking-tight'
           >
-            We Build Software That Growing Businesses Actually Use.
+            {heroConfig.heading}
           </MotionPreset>
 
           <MotionPreset
@@ -56,9 +118,9 @@ const HeroSection = () => {
             slide={{ direction: 'up', offset: 50 }}
             delay={0.6}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className='text-muted-foreground max-w-4xl'
+            className='text-muted-foreground max-w-4xl text-base sm:text-lg leading-relaxed'
           >
-            From custom platforms and mobile apps to in-house SaaS products like AI Greentick — Apargo is the engineering partner founders call when they want to ship fast, scale safely and stay technical.
+            {heroConfig.description}
           </MotionPreset>
 
           <MotionPreset
@@ -66,15 +128,15 @@ const HeroSection = () => {
             slide={{ direction: 'up', offset: 50 }}
             delay={0.9}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className='flex flex-wrap items-center gap-4'
+            className='flex flex-wrap items-center gap-4 w-full max-w-2xl'
           >
-            <div className='bg-background flex flex-col sm:flex-row h-fit w-full max-w-2xl items-center justify-between gap-2 rounded-2xl sm:rounded-full border p-2 sm:pl-6 sm:pr-2 sm:py-2'>
+            <div className='bg-background flex flex-col sm:flex-row h-fit w-full items-center justify-between gap-2 rounded-2xl sm:rounded-full border p-2 sm:pl-6 sm:pr-2 sm:py-2 shadow-lg'>
               <Label className='sr-only' htmlFor='prompt-space'>
                 Enter your business email
               </Label>
               <Input
                 type='text'
-                placeholder='hello@apargo.com'
+                placeholder={heroConfig.emailPlaceholder}
                 id='prompt-space'
                 className='placeholder:text-muted-foreground h-12 sm:h-12 border-0 bg-transparent p-2 sm:p-0 shadow-none focus:border-0 focus:ring-0 focus-visible:ring-0 md:text-base dark:bg-transparent w-full sm:flex-1'
               />
@@ -82,10 +144,10 @@ const HeroSection = () => {
               <Button
                 type='submit'
                 className={cn(
-                  'text-primary-foreground focus-visible:ring-ring/50 relative inline-flex h-12 w-full sm:w-auto cursor-pointer items-center justify-center gap-2 rounded-xl sm:rounded-full px-6 py-2 text-sm sm:text-base font-medium transition-colors focus-visible:ring-[3px] focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 hero-rainbow-btn'
+                  'text-primary-foreground focus-visible:ring-ring/50 relative inline-flex h-12 w-full sm:w-auto cursor-pointer items-center justify-center gap-2 rounded-xl sm:rounded-full px-6 py-2 text-sm sm:text-base font-semibold transition-colors focus-visible:ring-[3px] focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 hero-rainbow-btn'
                 )}
               >
-                Book a Free Consultation
+                {heroConfig.primaryBtnText}
               </Button>
             </div>
           </MotionPreset>
@@ -94,7 +156,7 @@ const HeroSection = () => {
         {/* Hero Image with 3D Tilt Effect */}
       </div>
 
-      <div className='relative pt-12 sm:pt-16 lg:pt-24'>
+      <div className='relative pt-4 sm:pt-16 lg:pt-24 overflow-hidden'>
         <MotionPreset fade transition={{ duration: 0.5, ease: 'easeOut' }} delay={1}>
           <Ripple numCircles={4} mainCircleSize={320} className='*:border-0!' />{' '}
         </MotionPreset>
@@ -108,7 +170,7 @@ const HeroSection = () => {
             <img
               src='https://cdn.shadcnstudio.com/ss-assets/blocks/marketing/hero/image-36.png'
               alt='girl Profile'
-              className='relative h-122 w-full object-contain max-sm:-bottom-18'
+              className='relative h-122 w-full object-contain max-sm:h-auto max-sm:bottom-0'
             />
           </MotionPreset>
           <CursorProvider>
@@ -159,12 +221,12 @@ const HeroSection = () => {
           slide={{ direction: 'down', offset: 50 }}
           delay={0}
           transition={{ duration: 0.5 }}
-          className='bg-primary relative z-1 flex items-center gap-x-10 p-4 max-sm:flex-col'
+          className='bg-primary relative z-1 flex w-full items-center gap-x-10 p-4 max-sm:flex-col'
         >
-          <p className='w-60 shrink-0 grow text-lg font-medium text-white uppercase dark:text-black'>
+          <p className='w-60 shrink-0 grow text-lg font-medium text-white uppercase dark:text-black max-sm:w-full max-sm:text-center'>
             Trusted by founders building serious products
           </p>
-          <div className='relative'>
+          <div className='relative w-full overflow-hidden'>
             <div className='from-primary pointer-events-none absolute inset-y-0 left-0 z-1 w-15 bg-gradient-to-r via-85% to-transparent max-sm:w-15' />
             <div className='from-primary pointer-events-none absolute inset-y-0 right-0 z-1 w-15 bg-gradient-to-l via-85% to-transparent max-sm:w-15' />
             <Marquee

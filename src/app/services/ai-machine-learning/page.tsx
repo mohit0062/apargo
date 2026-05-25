@@ -12,9 +12,10 @@ import {
 } from 'lucide-react'
 
 import SiteNavbar from '@/components/site-navbar'
+import { getSiteSection, getLucideIcon } from '@/utils/cms'
 import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer-component-05'
 
-import HeroSection from '@/components/shadcn-studio/blocks/hero-section-03-ai/hero-section-03-ai'
+import HeroSection from '@/components/shadcn-studio/blocks/hero-section-03/hero-section-03'
 import Features01 from '@/components/shadcn-studio/blocks/features-section-01-ai/features-section-01-ai'
 import CompareUILib from '@/components/shadcn-studio/blocks/compare-ui-lib-ai/compare-ui-lib-ai'
 import AppIntegration from '@/components/shadcn-studio/blocks/app-integration-03-ai/app-integration-03-ai'
@@ -22,7 +23,7 @@ import Features03 from '@/components/shadcn-studio/blocks/features-section-03-ai
 import CTA from '@/components/shadcn-studio/blocks/cta-section-11-ai/cta-section-11-ai'
 import FAQ from '@/components/shadcn-studio/blocks/faq-component-09/faq-component-09'
 
-import type { AvatarItem } from '@/components/shadcn-studio/blocks/hero-section-03-ai/hero-section-03-ai'
+import type { AvatarItem } from '@/components/shadcn-studio/blocks/hero-section-03/hero-section-03'
 
 export const metadata = {
   title: 'AI & Machine Learning Services — Practical AI for Business | Apargo',
@@ -218,15 +219,43 @@ const faqItems = [
   }
 ]
 
-const AIMachineLearningPage = () => {
+import { ServicePageSchema } from '@/components/json-ld'
+
+const AIMachineLearningPage = async () => {
+  const data = await getSiteSection('service_ai-machine-learning')
   return (
     <div className='flex min-h-screen flex-col'>
+      <ServicePageSchema
+        data={data}
+        serviceName="AI & Machine Learning Services"
+        fallbackDescription="Practical AI solutions — chatbots, document AI, recommendation engines, workflow automation."
+      />
       <SiteNavbar />
 
       <main className='flex flex-1 flex-col'>
-        <HeroSection avatars={avatars} />
+        <HeroSection
+          avatars={avatars}
+          badgeText={data.hero?.badgeText}
+          subtitleText={data.hero?.subtitleText}
+          title={data.hero?.title}
+          description={data.hero?.description}
+          primaryBtnText={data.hero?.primaryBtnText}
+          primaryBtnHref={data.hero?.primaryBtnHref}
+          secondaryBtnText={data.hero?.secondaryBtnText}
+          secondaryBtnHref={data.hero?.secondaryBtnHref}
+        />
 
-        <Features01 featuresList={featuresListFeaturesSection01} />
+        <Features01
+          featuresList={(data.featuresList || []).map((feature: any, idx: number) => {
+            const fallbackDesign = featuresListFeaturesSection01[idx] || featuresListFeaturesSection01[0] || {}
+            return {
+              ...fallbackDesign,
+              icon: getLucideIcon(feature.iconName),
+              title: feature.title,
+              description: feature.description
+            }
+          })}
+        />
 
         <CompareUILib stackData={stackData} />
 
@@ -236,7 +265,7 @@ const AIMachineLearningPage = () => {
 
         <CTA />
 
-        <FAQ faqItems={faqItems} />
+        <FAQ faqItems={data.faqItems || faqItems} />
       </main>
 
       <Footer />
