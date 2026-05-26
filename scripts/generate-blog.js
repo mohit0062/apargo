@@ -142,7 +142,7 @@ You MUST write the blog post using custom tag boundaries to encapsulate each fie
 [CONTENT] A detailed, long-form (1200+ words) technical article written in clean HTML. Do NOT include <html> or <body> tags. Use <h2>, <h3>, <p>, <strong>, <ul>, <li>, and <blockquote> tags. Use proper spacing, code snippets formatted with pre/code tags if applicable, and deep engineering insights. [/CONTENT]
 [CATEGORY] AI & Machine Learning | Web Development | Mobile App Development | SaaS Development | Cloud & DevOps | Product Design | WhatsApp Automation [/CATEGORY]
 [TAGS] Tag1, Tag2, Tag3 [/TAGS]
-[READ_TIME] e.g., 7 min read [/READ_TIME]
+[READ_TIME] Specify a value between "5 min read" and "10 min read" (e.g., 6 min read, 8 min read) based on content length [/READ_TIME]
 [META_TITLE] SEO Optimized Meta Title (max 60 chars) [/META_TITLE]
 [META_DESCRIPTION] SEO Optimized Meta Description (120-160 chars) [/META_DESCRIPTION]
 [FOCUS_KEYWORD] A single primary keyword or phrase to optimize this article for [/FOCUS_KEYWORD]
@@ -151,6 +151,7 @@ Important Style Instructions:
 - "Apargo" is senior-heavy, uses what it builds (AI Greentick is proof!), works on fixed quotes, ships fast, and handles full IP handovers.
 - Avoid boring surface-level articles. Go deep into architectural patterns, technical solutions, scaling challenges, or strategic AI implementations.
 - The HTML inside "content" must be exceptionally formatted. Use beautifully structured <h2> and <h3> headers, bulleted lists, and detailed explanations.
+- The article must be highly SEO optimized: naturally integrate the focus keyword in the title, meta description, first paragraph, headings, and at least 3-4 times throughout the body content.
 - DO NOT duplicate any of these existing blog post titles: [${existingTitles}]. Choose a fresh, highly relevant engineering topic.`;
 
   const userPrompt = `Generate a fresh, outstanding, long-form technical article for the Apargo blog.
