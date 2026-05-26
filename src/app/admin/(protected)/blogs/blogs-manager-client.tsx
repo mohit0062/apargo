@@ -543,8 +543,11 @@ export default function BlogsManagerClient({ initialBlogs }: BlogsManagerClientP
                         {/* Title and Action links */}
                         <TableCell className="align-middle py-3">
                           <div className="flex flex-col gap-0.5">
-                            <span className="font-semibold text-foreground text-sm leading-snug line-clamp-2">
-                              {blog.title}
+                            <span 
+                              className="font-semibold text-foreground text-sm leading-snug line-clamp-1 block max-w-[450px]"
+                              title={blog.title}
+                            >
+                              {blog.title.length > 55 ? blog.title.substring(0, 55) + '...' : blog.title}
                             </span>
                             <span className="text-[11px] text-muted-foreground/80 font-mono">
                               Slug: {blog.slug}
