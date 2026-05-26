@@ -140,22 +140,29 @@ Your job is to generate a highly technical, engaging, and professional tech blog
 
 You MUST write the blog post using custom tag boundaries to encapsulate each field. Do NOT wrap in JSON or any other format. Return ONLY the fields inside these exact tags:
 
+[FOCUS_KEYWORD] A highly targeted, specific long-tail keyphrase of 2-4 words representing the core topic [/FOCUS_KEYWORD]
 [TITLE] A highly engaging, click-worthy technical article title [/TITLE]
 [DESCRIPTION] A compelling, high-converting summary of the article (1-2 sentences) to hook the reader. [/DESCRIPTION]
 [SLUG] url-friendly-slug-separated-by-hyphens [/SLUG]
-[CONTENT] A detailed, long-form (1200+ words) technical article written in clean HTML. Do NOT include <html> or <body> tags. Use <h2>, <h3>, <p>, <strong>, <ul>, <li>, and <blockquote> tags. Use proper spacing, code snippets formatted with pre/code tags if applicable, and deep engineering insights. [/CONTENT]
 [CATEGORY] AI & Machine Learning | Web Development | Mobile App Development | SaaS Development | Cloud & DevOps | Product Design | WhatsApp Automation [/CATEGORY]
 [TAGS] Tag1, Tag2, Tag3 [/TAGS]
 [READ_TIME] Specify a value between "5 min read" and "10 min read" (e.g., 6 min read, 8 min read) based on content length [/READ_TIME]
 [META_TITLE] SEO Optimized Meta Title (max 60 chars) [/META_TITLE]
 [META_DESCRIPTION] SEO Optimized Meta Description (120-160 chars) [/META_DESCRIPTION]
-[FOCUS_KEYWORD] A single primary keyword or phrase to optimize this article for [/FOCUS_KEYWORD]
+[CONTENT] A detailed, long-form (1200+ words) technical article written in clean HTML. Do NOT include <html> or <body> tags. Use <h2>, <h3>, <p>, <strong>, <ul>, <li>, and <blockquote> tags. Use proper spacing, code snippets formatted with pre/code tags if applicable, and deep engineering insights. [/CONTENT]
 
-Important Style Instructions:
-- "Apargo" is senior-heavy, uses what it builds (AI Greentick is proof!), works on fixed quotes, ships fast, and handles full IP handovers.
-- Avoid boring surface-level articles. Go deep into architectural patterns, technical solutions, scaling challenges, or strategic AI implementations.
-- The HTML inside "content" must be exceptionally formatted. Use beautifully structured <h2> and <h3> headers, bulleted lists, and detailed explanations.
-- The article must be highly SEO optimized: naturally integrate the focus keyword in the title, meta description, first paragraph, headings, and at least 3-4 times throughout the body content.
+Important SEO, AEO & GEO Optimization Rules:
+- The [FOCUS_KEYWORD] MUST NOT be a broad category like "Engineering" or "AI". It MUST be a targeted long-tail keyphrase representing the topic (e.g., "Production RAG Pipelines", "Cloud Cost Optimization", "WhatsApp Chatbot Workflows").
+- The [TITLE] MUST contain the exact [FOCUS_KEYWORD] naturally.
+- The [SLUG] MUST naturally contain the [FOCUS_KEYWORD] joined by hyphens.
+- The [META_TITLE] and [META_DESCRIPTION] MUST contain the [FOCUS_KEYWORD] naturally. The meta description must be exactly between 120-160 characters.
+- The first 100 words (first paragraph) of the [CONTENT] MUST contain the [FOCUS_KEYWORD] naturally.
+- The [CONTENT] body must naturally repeat the [FOCUS_KEYWORD] at least 4-5 times throughout the text.
+- Use H2 and H3 tags extensively, and ensure at least one H2 heading contains the [FOCUS_KEYWORD].
+- **AEO (Answer Engine Optimization):** Start the [CONTENT] with a clear "Quick Answer" or "TL;DR Summary" in a <blockquote> block. Use structured bulleted/numbered lists (<ol>, <ul>, <li>) for steps, processes, and checklist items.
+- **GEO (Generative Engine Optimization):** Use authoritative, technical terminology, exact stats/latency numbers (e.g., "40% reduction", "250ms latency"), and clean, fully commented code blocks (<pre><code>) to demonstrate actual technical depth.
+- **Internal/External Links:** Ensure the article naturally mentions at least 1-2 external authority links (e.g., pointing to official documentation like react.dev or aws.amazon.com) and internal links to other Apargo services/products (like "AI Greentick" or "Apargo custom software").
+- **Style:** Apargo is senior-heavy, uses what it builds, works on fixed quotes, and handles full IP handovers. Keep the tone premium, expert, and conversational.
 - DO NOT duplicate any of these existing blog post titles: [${existingTitles}]. Choose a fresh, highly relevant engineering topic.`
 
     const userPrompt = `Generate a fresh, outstanding, long-form technical article for the Apargo blog.
@@ -189,8 +196,17 @@ Ensure that the output strictly follows the custom tag structure.`
     const textResponse = responseBody.content[0].text.trim()
 
     const parseTag = (tag: string) => {
-      const regex = new RegExp(`\\[${tag}\\](.*?)\\[\\/${tag}\\]`, 'is')
-      return textResponse.match(regex)?.[1]?.trim() || ''
+      // 1. Try strict matching: [TAG]content[/TAG]
+      const strictRegex = new RegExp(`\\[${tag}\\](.*?)\\[\\/${tag}\\]`, 'is')
+      const strictMatch = textResponse.match(strictRegex)
+      if (strictMatch) return strictMatch[1].trim()
+
+      // 2. Loose failsafe matching: from [TAG] to the next opening tag or end of response
+      const looseRegex = new RegExp(`\\[${tag}\\](.*?)(?=\\[[A-Z_]+\\]|$)`, 'is')
+      const looseMatch = textResponse.match(looseRegex)
+      if (looseMatch) return looseMatch[1].trim()
+
+      return ''
     }
 
     // 6. Complete and Validate Generated Meta Fields
