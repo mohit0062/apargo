@@ -6,9 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test-blog": "node scripts/generate-blog.js"
   },
   "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.1053.0",
     "@base-ui/react": "^1.4.1",
     "@supabase/ssr": "^0.10.3",
     "@supabase/supabase-js": "^2.105.4",
