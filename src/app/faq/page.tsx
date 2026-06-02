@@ -6,6 +6,7 @@ import CTA from '@/components/shadcn-studio/blocks/cta-section-11/cta-section-11
 import SiteNavbar from '@/components/site-navbar'
 import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer-component-05'
 import FAQPageClient from './faq-page-client'
+import { JsonLd } from '@/components/json-ld'
 
 // Dynamic Metadata Generation
 export async function generateMetadata(): Promise<Metadata> {
@@ -22,8 +23,22 @@ export const dynamic = 'force-dynamic'
 export default async function FAQPage() {
   const content = await getSiteSection('page_faq')
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": (content.items || []).map((item: any) => ({
+      "@type": "Question",
+      "name": item.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": item.answer
+      }
+    }))
+  }
+
   return (
     <div className='flex min-h-screen flex-col'>
+      <JsonLd data={faqSchema} />
       <SiteNavbar />
 
       {/* Hero */}

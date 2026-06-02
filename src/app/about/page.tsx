@@ -10,6 +10,7 @@ import HowWeWork from '@/components/shadcn-studio/blocks/how-we-work/how-we-work
 import Team from '@/components/shadcn-studio/blocks/team-section-12/team-section-12'
 import type { TeamMember } from '@/components/shadcn-studio/blocks/team-section-12/team-section-12'
 import { getSiteSection } from '@/utils/cms'
+import { JsonLd } from '@/components/json-ld'
 
 export const metadata: Metadata = {
   title: 'About Apargo - The Team Behind AI Greentick',
@@ -157,8 +158,37 @@ const AboutPage = async () => {
   const aboutData = await getSiteSection('about_page')
   const { hero, story, team } = aboutData
 
+  const aboutSchema = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "About Apargo Innovations",
+    "description": hero?.description || "Learn about Apargo Innovations' story, mission, team, and commitments to engineering products.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Apargo Innovations",
+      "url": "https://www.apargoinnovations.com",
+      "logo": "https://www.apargoinnovations.com/group-2.svg"
+    },
+    "mainEntity": {
+      "@type": "ItemList",
+      "numberOfItems": team?.members?.length || 0,
+      "itemListElement": (team?.members || []).map((m: any, idx: number) => ({
+        "@type": "ListItem",
+        "position": idx + 1,
+        "item": {
+          "@type": "Person",
+          "name": m.name,
+          "jobTitle": m.title,
+          "description": m.description,
+          "image": m.image
+        }
+      }))
+    }
+  }
+
   return (
     <div className='flex min-h-screen flex-col'>
+      <JsonLd data={aboutSchema} />
       <SiteNavbar />
       <main className='flex-1 pt-[4.5rem]'>
         <AboutUs18 

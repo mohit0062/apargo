@@ -13,6 +13,7 @@ import CTA from '@/components/shadcn-studio/blocks/cta-section-11/cta-section-11
 import SiteNavbar from '@/components/site-navbar'
 import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer-component-05'
 import { getSiteSection, getLucideIcon } from '@/utils/cms'
+import { JsonLd } from '@/components/json-ld'
 
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getSiteSection('page_contact')
@@ -33,8 +34,31 @@ export default async function ContactPage() {
     icon: getLucideIcon(card.iconName),
   }))
 
+  const contactSchema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact Apargo Innovations",
+    "description": "Reach out to Apargo Innovations for custom software engineering consultations, support pathways, or career enquiries.",
+    "url": "https://www.apargoinnovations.com/contact",
+    "mainEntity": {
+      "@type": "ProfessionalService",
+      "name": "Apargo Innovations",
+      "image": "https://www.apargoinnovations.com/group-2.svg",
+      "telephone": "",
+      "email": "hello@apargo.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Jaipur",
+        "addressRegion": "Rajasthan",
+        "postalCode": "302001",
+        "addressCountry": "IN"
+      }
+    }
+  }
+
   return (
     <div className='flex min-h-screen flex-col'>
+      <JsonLd data={contactSchema} />
       <SiteNavbar />
 
       {/* Contact Section */}

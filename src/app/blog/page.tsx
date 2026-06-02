@@ -1,7 +1,14 @@
+import { Metadata } from 'next'
 import Blog from '@/components/shadcn-studio/blocks/blog-component-15/blog-component-15'
 import SiteNavbar from '@/components/site-navbar'
 import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer-component-05'
 import { createClient } from '@/utils/supabase/server'
+import { JsonLd } from '@/components/json-ld'
+
+export const metadata: Metadata = {
+  title: 'Blog — Engineering Notes, AI Experiments & Product Playbooks | Apargo',
+  description: 'Read the latest insights on product engineering, applied artificial intelligence, and software scaling strategy from the Apargo builder team.'
+}
 
 // Force dynamic rendering to ensure posts are always fresh
 export const revalidate = 0
@@ -33,8 +40,28 @@ const LandingPage = async () => {
     categoryLink: '#',
   }))
 
+  const blogSchema = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Apargo Innovations Blog",
+    "description": "Engineering notes, AI experiments, and product playbooks from the creators of AI Greentick.",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Apargo Innovations",
+      "logo": "https://www.apargoinnovations.com/group-2.svg"
+    },
+    "blogPost": blogPosts.map((post) => ({
+      "@type": "BlogPosting",
+      "headline": post.title,
+      "description": post.description,
+      "image": post.imageUrl,
+      "url": `https://www.apargoinnovations.com${post.blogLink}`
+    }))
+  }
+
   return (
     <div className='flex min-h-screen flex-col font-sans'>
+      <JsonLd data={blogSchema} />
       <SiteNavbar />
       <Blog blogPosts={blogPosts} />
       <Footer />

@@ -20,6 +20,7 @@ import {
 import CTA from '@/components/shadcn-studio/blocks/cta-section-11/cta-section-11'
 import SiteNavbar from '@/components/site-navbar'
 import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer-component-05'
+import { JsonLd } from '@/components/json-ld'
 
 const CaseStudiesPage = () => {
   const [activeIndustry, setActiveIndustry] = useState('All')
@@ -33,8 +34,27 @@ const CaseStudiesPage = () => {
     return industryMatch && techMatch && serviceMatch
   })
 
+  const caseStudiesSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Apargo Innovations - Shipped Case Studies",
+    "description": "Explore real projects shipped by the Apargo Innovations product engineering team including web apps, custom software platforms, and mobile apps with measurable outcomes.",
+    "url": "https://www.apargoinnovations.com/case-studies",
+    "itemListElement": caseStudies.map((cs, idx) => ({
+      "@type": "ListItem",
+      "position": idx + 1,
+      "item": {
+        "@type": "TechArticle",
+        "headline": cs.title,
+        "description": cs.summary,
+        "url": `https://www.apargoinnovations.com/case-studies/${cs.slug}`
+      }
+    }))
+  }
+
   return (
     <div className='flex min-h-screen flex-col'>
+      <JsonLd data={caseStudiesSchema} />
       <SiteNavbar />
 
       {/* Hero */}

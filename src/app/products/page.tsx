@@ -7,6 +7,7 @@ import Features19 from '@/components/shadcn-studio/blocks/features-section-19/fe
 import HeroSection from '@/components/shadcn-studio/blocks/hero-section-24/hero-section-24'
 import SiteNavbar from '@/components/site-navbar'
 import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer-component-05'
+import { JsonLd } from '@/components/json-ld'
 
 export const dynamic = 'force-dynamic'
 
@@ -22,8 +23,29 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ProductsPage() {
   const content = await getSiteSection('page_products')
 
+  const productsSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Apargo Innovations - Software Products",
+    "description": content.hero?.description || "Apargo Innovations builds and runs its own SaaS products. Explore AI Greentick and our upcoming lab projects.",
+    "url": "https://www.apargoinnovations.com/products",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "Product",
+          "name": "AI Greentick",
+          "description": "The complete WhatsApp marketing suite for modern teams. Broadcasts, shared inbox, no-code AI chatbots, and full campaign analytics.",
+          "url": "https://www.apargoinnovations.com/products/ai-greentick"
+        }
+      }
+    ]
+  }
+
   return (
     <div className='flex flex-col'>
+      <JsonLd data={productsSchema} />
       <SiteNavbar />
 
       <HeroSection 

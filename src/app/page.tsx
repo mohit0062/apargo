@@ -17,6 +17,7 @@ import TestimonialsComponent from '@/components/shadcn-studio/blocks/testimonial
 import SiteNavbar from '@/components/site-navbar'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { getSiteSection } from '@/utils/cms'
+import { JsonLd } from '@/components/json-ld'
 
 export const dynamic = 'force-dynamic'
 
@@ -172,8 +173,57 @@ export default async function Home() {
   const testimonialsData = await getSiteSection('testimonials')
   const ctaData = await getSiteSection('cta')
 
+  const professionalServiceSchema = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Apargo Innovations",
+    "image": "https://www.apargoinnovations.com/group-2.svg",
+    "@id": "https://www.apargoinnovations.com/#organization",
+    "url": "https://www.apargoinnovations.com",
+    "telephone": "",
+    "priceRange": "$$$",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Jaipur",
+      "addressRegion": "Rajasthan",
+      "postalCode": "302001",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 26.9124,
+      "longitude": 75.7873
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+      ],
+      "opens": "10:00",
+      "closes": "19:00"
+    },
+    "sameAs": [
+      "https://www.linkedin.com/company/apargoinnovations",
+      "https://twitter.com/apargo"
+    ],
+    "knowsAbout": [
+      "Product Engineering",
+      "Web Development Services",
+      "Mobile App Development Services",
+      "Custom Software Development Services",
+      "AI & Machine Learning Services",
+      "SaaS Product Development Services",
+      "Cloud & DevOps Services"
+    ]
+  }
+
   return (
     <div className='relative flex min-h-screen w-full max-w-[100vw] flex-col font-sans overflow-x-clip'>
+      <JsonLd data={professionalServiceSchema} />
       <HeroSection16Block navbarData={navbarData} heroData={heroData} />
       <FeaturesSection12Block />
       <FeaturesSection18Block />

@@ -1,5 +1,6 @@
 import { BookOpenIcon, CodeIcon, PenToolIcon, RocketIcon, SparklesIcon, ZapIcon } from 'lucide-react'
 import React from 'react'
+import { Metadata } from 'next'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Card, CardContent, CardTitle } from '@/components/ui/card'
 import CTA from '@/components/shadcn-studio/blocks/cta-section-11/cta-section-11'
@@ -12,6 +13,12 @@ import type { Navigation } from '@/components/shadcn-studio/blocks/hero-navigati
 import { BentoGrid } from '@/components/BentoGrid'
 import SiteNavbar from '@/components/site-navbar'
 import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer-component-05'
+import { JsonLd } from '@/components/json-ld'
+
+export const metadata: Metadata = {
+  title: 'IT Services — Web, Mobile, AI & SaaS Development | Apargo',
+  description: 'Apargo offers full-stack product engineering services — web and mobile development, AI integration, SaaS product development, cloud and DevOps. Built by the team behind AI Greentick.'
+}
 
 
 const navigationData: Navigation[] = [
@@ -519,8 +526,100 @@ const CtaSection11Block = () => {
 }
 
 const LandingPage = () => {
+  const servicesSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Apargo Innovations - IT & Product Engineering Services",
+    "description": "Apargo Innovations offers a full range of custom software engineering services including web development, mobile apps, custom SaaS engines, practical AI integration, and dedicated developer augmentation.",
+    "url": "https://www.apargoinnovations.com/services",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "Service",
+          "name": "Web Development",
+          "url": "https://www.apargoinnovations.com/services/web-development"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "Service",
+          "name": "Mobile App Development",
+          "url": "https://www.apargoinnovations.com/services/mobile-app-development"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "Service",
+          "name": "Custom Software Development",
+          "url": "https://www.apargoinnovations.com/services/custom-software"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "item": {
+          "@type": "Service",
+          "name": "AI & Machine Learning",
+          "url": "https://www.apargoinnovations.com/services/ai-machine-learning"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "item": {
+          "@type": "Service",
+          "name": "SaaS Product Development",
+          "url": "https://www.apargoinnovations.com/services/saas-product-development"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 6,
+        "item": {
+          "@type": "Service",
+          "name": "Cloud & DevOps",
+          "url": "https://www.apargoinnovations.com/services/cloud-devops"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 7,
+        "item": {
+          "@type": "Service",
+          "name": "UI/UX Design",
+          "url": "https://www.apargoinnovations.com/services/ui-ux-design"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 8,
+        "item": {
+          "@type": "Service",
+          "name": "Digital Marketing & SEO",
+          "url": "https://www.apargoinnovations.com/services/digital-marketing-seo"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 9,
+        "item": {
+          "@type": "Service",
+          "name": "IT Consulting",
+          "url": "https://www.apargoinnovations.com/services/it-consulting"
+        }
+      }
+    ]
+  }
+
   return (
     <div className='flex flex-col'>
+      <JsonLd data={servicesSchema} />
       <SiteNavbar />
 
       <HeroSection33Block />

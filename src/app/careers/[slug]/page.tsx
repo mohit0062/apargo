@@ -28,6 +28,7 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { getCareerRole, openApplicationHref, openRoles } from '@/lib/careers'
 import { cn } from '@/lib/utils'
+import { JsonLd } from '@/components/json-ld'
 
 type RolePageProps = {
   params: Promise<{ slug: string }>
@@ -78,8 +79,49 @@ export default async function CareerRolePage({ params }: RolePageProps) {
     notFound()
   }
 
+  const jobSchema = {
+    "@context": "https://schema.org",
+    "@type": "JobPosting",
+    "title": role.title,
+    "description": role.summary + "\n\n" + role.about.join("\n") + "\n\nResponsibilities:\n" + role.responsibilities.join("\n") + "\n\nRequirements:\n" + role.requirements.join("\n"),
+    "datePosted": "2026-05-15",
+    "validThrough": "2026-12-31T23:59:59Z",
+    "employmentType": role.employmentType === "Full-time" ? "FULL_TIME" : "CONTRACTOR",
+    "hiringOrganization": {
+      "@type": "Organization",
+      "name": "Apargo Innovations",
+      "sameAs": "https://www.apargoinnovations.com",
+      "logo": "https://www.apargoinnovations.com/group-2.svg"
+    },
+    "jobLocation": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Jaipur",
+        "addressRegion": "Rajasthan",
+        "addressCountry": "IN"
+      }
+    },
+    "baseSalary": {
+      "@type": "MonetaryAmount",
+      "currency": "INR",
+      "value": {
+        "@type": "QuantitativeValue",
+        "value": role.compensation.range.includes("36L") 
+          ? 3600000 
+          : role.compensation.range.includes("42L") 
+          ? 4200000 
+          : role.compensation.range.includes("24L") 
+          ? 2400000 
+          : 3400000,
+        "unitText": "YEAR"
+      }
+    }
+  }
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
+      <JsonLd data={jobSchema} />
       <SiteNavbar />
 
       <main className="flex-1">

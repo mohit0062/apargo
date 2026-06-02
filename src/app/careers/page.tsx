@@ -24,6 +24,7 @@ import { Separator } from '@/components/ui/separator'
 import { openApplicationHref, openRoles, type CareerRole } from '@/lib/careers'
 import { cn } from '@/lib/utils'
 import { getSiteSection, getLucideIcon } from '@/utils/cms'
+import { JsonLd } from '@/components/json-ld'
 
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getSiteSection('page_careers')
@@ -131,8 +132,27 @@ function RoleCard({ role }: { role: CareerRole }) {
 export default async function CareersPage() {
   const content = await getSiteSection('page_careers')
 
+  const careersSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Apargo Innovations - Open Engineering & Product Careers",
+    "description": content.hero?.description || "Open engineering, design, AI and product roles at Apargo Innovations. Remote-friendly, senior-heavy team.",
+    "url": "https://www.apargoinnovations.com/careers",
+    "itemListElement": openRoles.map((role, idx) => ({
+      "@type": "ListItem",
+      "position": idx + 1,
+      "item": {
+        "@type": "JobPosting",
+        "title": role.title,
+        "description": role.summary,
+        "url": `https://www.apargoinnovations.com/careers/${role.slug}`
+      }
+    }))
+  }
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
+      <JsonLd data={careersSchema} />
       <SiteNavbar />
 
       <main className="flex-1 overflow-hidden">
