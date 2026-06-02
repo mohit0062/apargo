@@ -6,6 +6,7 @@ import { MotionPreset } from '@/components/ui/motion-preset'
 import CTA from '@/components/shadcn-studio/blocks/cta-section-11/cta-section-11'
 import SiteNavbar from '@/components/site-navbar'
 import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer-component-05'
+import InteractiveStackExplorer from '@/components/InteractiveStackExplorer'
 
 // Dynamic Metadata Generation
 export async function generateMetadata(): Promise<Metadata> {
@@ -60,6 +61,9 @@ export default async function TechnologiesPage() {
           </div>
         </div>
       </section>
+
+      {/* Interactive Stack Explorer Node Graph */}
+      <InteractiveStackExplorer />
 
       {/* Stack Groups */}
       <section className='py-12 sm:py-16 lg:py-24'>

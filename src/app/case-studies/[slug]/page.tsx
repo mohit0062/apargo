@@ -13,6 +13,7 @@ import { caseStudies } from '@/lib/case-studies'
 import CTA from '@/components/shadcn-studio/blocks/cta-section-11/cta-section-11'
 import SiteNavbar from '@/components/site-navbar'
 import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer-component-05'
+import { JsonLd } from '@/components/json-ld'
 
 export async function generateStaticParams() {
   return caseStudies.map((cs) => ({ slug: cs.slug }))
@@ -41,8 +42,37 @@ export default async function CaseStudyDetailPage({
   const cs = caseStudies.find((c) => c.slug === slug)
   if (!cs) notFound()
 
+  const caseStudySchema = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": cs.title,
+    "description": cs.summary,
+    "image": cs.coverImage ? `https://www.apargoinnovations.com${cs.coverImage}` : undefined,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Apargo Innovations",
+      "url": "https://www.apargoinnovations.com",
+      "logo": "https://www.apargoinnovations.com/group-2.svg"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "Apargo Innovations",
+      "url": "https://www.apargoinnovations.com"
+    },
+    "about": cs.stack.map((s) => ({
+      "@type": "Thing",
+      "name": s.tech
+    })),
+    "creativeWorkStatus": "Published",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://www.apargoinnovations.com/case-studies/${cs.slug}`
+    }
+  }
+
   return (
     <div className='flex min-h-screen flex-col'>
+      <JsonLd data={caseStudySchema} />
       <SiteNavbar />
 
       {/* Hero */}

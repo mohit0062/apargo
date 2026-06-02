@@ -8,6 +8,7 @@ import HeroSection from '@/components/shadcn-studio/blocks/hero-section-11/hero-
 import Pricing from '@/components/shadcn-studio/blocks/pricing-component-15/pricing-component-15'
 import SiteNavbar from '@/components/site-navbar'
 import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer-component-05'
+import { JsonLd } from '@/components/json-ld'
 
 export const dynamic = 'force-dynamic'
 
@@ -23,8 +24,50 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function AiGreentickPage() {
   const content = await getSiteSection('page_ai_greentick')
 
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "AI Greentick",
+    "description": content.hero?.description || "The complete WhatsApp marketing suite for modern teams. Built on the official WhatsApp Business API.",
+    "brand": {
+      "@type": "Brand",
+      "name": "Apargo"
+    },
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "USD",
+      "lowPrice": 49,
+      "highPrice": 499,
+      "offerCount": 3,
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Starter Plan",
+          "price": 49,
+          "priceCurrency": "USD",
+          "url": "https://www.apargoinnovations.com/products/ai-greentick#pricing"
+        },
+        {
+          "@type": "Offer",
+          "name": "Growth Plan",
+          "price": 149,
+          "priceCurrency": "USD",
+          "url": "https://www.apargoinnovations.com/products/ai-greentick#pricing"
+        },
+        {
+          "@type": "Offer",
+          "name": "Scale Plan",
+          "price": 499,
+          "priceCurrency": "USD",
+          "url": "https://www.apargoinnovations.com/products/ai-greentick#pricing"
+        }
+      ]
+    }
+  }
+
   return (
     <div className='flex flex-col'>
+      <JsonLd data={productSchema} />
       <SiteNavbar />
 
       <HeroSection 
