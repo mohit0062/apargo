@@ -52,9 +52,21 @@ export async function generateMetadata({
     }
   }
 
+  const title = `${role.title} | Careers at Apargo`
+  const description = `${role.summary} ${role.location}. ${role.employmentType}. Compensation: ${role.compensation.range}.`
+
   return {
-    title: `${role.title} | Careers at Apargo`,
-    description: `${role.summary} ${role.location}. ${role.employmentType}. Compensation: ${role.compensation.range}.`,
+    title,
+    description,
+    alternates: {
+      canonical: `/careers/${slug}`,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `/careers/${slug}`,
+      type: 'website',
+    }
   }
 }
 

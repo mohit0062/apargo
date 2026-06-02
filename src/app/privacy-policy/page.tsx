@@ -9,6 +9,16 @@ export const metadata: Metadata = {
   title: 'Privacy Policy | Apargo',
   description:
     'How Apargo collects, uses, shares and protects your information. Compliant with DPDPA 2023 and GDPR.',
+  alternates: {
+    canonical: '/privacy-policy',
+  },
+  openGraph: {
+    title: 'Privacy Policy | Apargo',
+    description:
+      'How Apargo collects, uses, shares and protects your information. Compliant with DPDPA 2023 and GDPR.',
+    url: '/privacy-policy',
+    type: 'website',
+  }
 }
 
 const lastUpdated = '17 May 2026'

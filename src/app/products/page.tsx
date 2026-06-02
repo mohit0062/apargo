@@ -13,10 +13,21 @@ export const dynamic = 'force-dynamic'
 
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getSiteSection('page_products')
+  const title = content.seo?.title || 'Our Products — AI Greentick & More | Apargo'
+  const description = content.seo?.description || 'Apargo builds and runs its own SaaS products. Meet AI Greentick — our WhatsApp marketing suite — and the lab projects coming next.'
   return {
-    title: content.seo?.title || 'Our Products — AI Greentick & More | Apargo',
-    description: content.seo?.description || 'Apargo builds and runs its own SaaS products. Meet AI Greentick — our WhatsApp marketing suite — and the lab projects coming next.',
-    keywords: content.seo?.keywords || 'products, software, saas, whatsapp marketing, ai greentick, apargo'
+    title,
+    description,
+    keywords: content.seo?.keywords || 'products, software, saas, whatsapp marketing, ai greentick, apargo',
+    alternates: {
+      canonical: '/products',
+    },
+    openGraph: {
+      title,
+      description,
+      url: '/products',
+      type: 'website',
+    }
   }
 }
 

@@ -11,10 +11,21 @@ import { JsonLd } from '@/components/json-ld'
 // Dynamic Metadata Generation
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getSiteSection('page_faq')
+  const title = content.seo?.title || 'FAQ — Frequently Asked Questions | Apargo'
+  const description = content.seo?.description || "Find answers to questions about Apargo's product engineering, IT services, pricing, process, products like AI Greentick, and career hiring processes."
   return {
-    title: content.seo?.title || 'FAQ — Frequently Asked Questions | Apargo',
-    description: content.seo?.description || "Find answers to questions about Apargo's product engineering, IT services, pricing, process, products like AI Greentick, and career hiring processes.",
+    title,
+    description,
     keywords: content.seo?.keywords || "faq, questions, support, pricing, process, apargo",
+    alternates: {
+      canonical: '/faq',
+    },
+    openGraph: {
+      title,
+      description,
+      url: '/faq',
+      type: 'website',
+    }
   }
 }
 

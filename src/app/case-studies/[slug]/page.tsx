@@ -27,9 +27,20 @@ export async function generateMetadata({
   const { slug } = await params
   const cs = caseStudies.find((c) => c.slug === slug)
   if (!cs) return {}
+  const title = `${cs.title} | Case Study | Apargo`
+  const description = cs.summary
   return {
-    title: `${cs.title} | Case Study | Apargo`,
-    description: cs.summary,
+    title,
+    description,
+    alternates: {
+      canonical: `/case-studies/${slug}`,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `/case-studies/${slug}`,
+      type: 'website',
+    }
   }
 }
 

@@ -7,14 +7,26 @@ import CTA from '@/components/shadcn-studio/blocks/cta-section-11/cta-section-11
 import SiteNavbar from '@/components/site-navbar'
 import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer-component-05'
 import InteractiveStackExplorer from '@/components/InteractiveStackExplorer'
+import { JsonLd } from '@/components/json-ld'
 
 // Dynamic Metadata Generation
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getSiteSection('page_technologies')
+  const title = content.seo?.title || 'Technologies We Use — React, Node, Python, AWS, AI | Apargo'
+  const description = content.seo?.description || "Apargo's technology stack — React, Next.js, Node, Python, AWS, GCP, Kubernetes, LLMs and more. Modern, mainstream, maintainable."
   return {
-    title: content.seo?.title || 'Technologies We Use — React, Node, Python, AWS, AI | Apargo',
-    description: content.seo?.description || "Apargo's technology stack — React, Next.js, Node, Python, AWS, GCP, Kubernetes, LLMs and more. Modern, mainstream, maintainable.",
+    title,
+    description,
     keywords: content.seo?.keywords || "react, node, python, aws, ai, apargo",
+    alternates: {
+      canonical: '/technologies',
+    },
+    openGraph: {
+      title,
+      description,
+      url: '/technologies',
+      type: 'website',
+    }
   }
 }
 
@@ -23,8 +35,26 @@ export const dynamic = 'force-dynamic'
 export default async function TechnologiesPage() {
   const content = await getSiteSection('page_technologies')
 
+  const techList = (content.stackGroups || []).flatMap((group: any) =>
+    (group.items || []).map((item: any) => item.name)
+  )
+
+  const techSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Apargo Innovations Technology Stack",
+    "description": "The programming languages, frameworks, libraries, database engines, and cloud infrastructure tools utilized by Apargo Innovations.",
+    "numberOfItems": techList.length,
+    "itemListElement": techList.map((techName: string, index: number) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": techName
+    }))
+  }
+
   return (
     <div className='flex min-h-screen flex-col'>
+      <JsonLd data={techSchema} />
       <SiteNavbar />
 
       {/* Hero */}

@@ -19,7 +19,30 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { getSiteSection } from '@/utils/cms'
 import { JsonLd } from '@/components/json-ld'
 
+import type { Metadata } from 'next'
+
 export const dynamic = 'force-dynamic'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const seo = await getSiteSection<any>('seo')
+  const title = seo.siteTitle || "Apargo"
+  const description = seo.defaultDescription || "Apargo Innovations"
+  
+  return {
+    title: `Product Engineering & AI Services | ${title}`,
+    description,
+    alternates: {
+      canonical: '/',
+    },
+    openGraph: {
+      title: `Product Engineering & AI Services | ${title}`,
+      description,
+      url: '/',
+      siteName: title,
+      type: 'website',
+    }
+  }
+}
 
 const featuresList = [
   {

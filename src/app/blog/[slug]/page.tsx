@@ -35,10 +35,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     title: `${title} | Apargo Blog`,
     description,
     keywords,
+    alternates: {
+      canonical: `/blog/${slug}`,
+    },
     openGraph: {
       title,
       description,
       type: 'article',
+      url: `/blog/${slug}`,
       publishedTime: post.created_at,
       authors: [post.author || 'Apargo'],
       images: [

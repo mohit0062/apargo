@@ -9,6 +9,16 @@ export const metadata: Metadata = {
   title: 'Terms of Service | Apargo',
   description:
     'Terms of Service governing use of apargo.com and engagement of Apargo for IT services and product engineering.',
+  alternates: {
+    canonical: '/terms',
+  },
+  openGraph: {
+    title: 'Terms of Service | Apargo',
+    description:
+      'Terms of Service governing use of apargo.com and engagement of Apargo for IT services and product engineering.',
+    url: '/terms',
+    type: 'website',
+  }
 }
 
 const lastUpdated = '17 May 2026'

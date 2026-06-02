@@ -28,10 +28,21 @@ import { JsonLd } from '@/components/json-ld'
 
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getSiteSection('page_careers')
+  const title = content.seo?.title || 'Careers at Apargo — Build Software That Ships'
+  const description = content.seo?.description || 'Open engineering, design, AI and product roles at Apargo. Remote-friendly, senior-heavy team. Builders of AI Greentick.'
   return {
-    title: content.seo?.title || 'Careers at Apargo — Build Software That Ships',
-    description: content.seo?.description || 'Open engineering, design, AI and product roles at Apargo. Remote-friendly, senior-heavy team. Builders of AI Greentick.',
+    title,
+    description,
     keywords: content.seo?.keywords || 'careers, jobs, hiring, work at apargo, next.js jobs, react native jobs',
+    alternates: {
+      canonical: '/careers',
+    },
+    openGraph: {
+      title,
+      description,
+      url: '/careers',
+      type: 'website',
+    }
   }
 }
 

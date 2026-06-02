@@ -15,7 +15,17 @@ import { JsonLd } from '@/components/json-ld'
 export const metadata: Metadata = {
   title: 'About Apargo - The Team Behind AI Greentick',
   description:
-    'Meet Apargo - a product-engineering company building custom software, mobile apps and SaaS products. The team behind AI Greentick.'
+    'Meet Apargo - a product-engineering company building custom software, mobile apps and SaaS products. The team behind AI Greentick.',
+  alternates: {
+    canonical: '/about',
+  },
+  openGraph: {
+    title: 'About Apargo - The Team Behind AI Greentick',
+    description:
+      'Meet Apargo - a product-engineering company building custom software, mobile apps and SaaS products. The team behind AI Greentick.',
+    url: '/about',
+    type: 'website',
+  }
 }
 
 const stats = [

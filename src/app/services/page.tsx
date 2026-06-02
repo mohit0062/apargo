@@ -17,7 +17,16 @@ import { JsonLd } from '@/components/json-ld'
 
 export const metadata: Metadata = {
   title: 'IT Services — Web, Mobile, AI & SaaS Development | Apargo',
-  description: 'Apargo offers full-stack product engineering services — web and mobile development, AI integration, SaaS product development, cloud and DevOps. Built by the team behind AI Greentick.'
+  description: 'Apargo offers full-stack product engineering services — web and mobile development, AI integration, SaaS product development, cloud and DevOps. Built by the team behind AI Greentick.',
+  alternates: {
+    canonical: '/services',
+  },
+  openGraph: {
+    title: 'IT Services — Web, Mobile, AI & SaaS Development | Apargo',
+    description: 'Apargo offers full-stack product engineering services — web and mobile development, AI integration, SaaS product development, cloud and DevOps. Built by the team behind AI Greentick.',
+    url: '/services',
+    type: 'website',
+  }
 }
 
 

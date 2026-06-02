@@ -9,6 +9,16 @@ export const metadata: Metadata = {
   title: 'Cookie Policy | Apargo',
   description:
     'What cookies Apargo uses on apargo.com, why, and how you can control them. Works alongside our Privacy Policy.',
+  alternates: {
+    canonical: '/cookie-policy',
+  },
+  openGraph: {
+    title: 'Cookie Policy | Apargo',
+    description:
+      'What cookies Apargo uses on apargo.com, why, and how you can control them. Works alongside our Privacy Policy.',
+    url: '/cookie-policy',
+    type: 'website',
+  }
 }
 
 const lastUpdated = '17 May 2026'

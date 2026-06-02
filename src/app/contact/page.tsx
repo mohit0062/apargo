@@ -17,10 +17,21 @@ import { JsonLd } from '@/components/json-ld'
 
 export async function generateMetadata(): Promise<Metadata> {
   const content = await getSiteSection('page_contact')
+  const title = content.seo?.title || 'Contact Us — Get in Touch with Apargo'
+  const description = content.seo?.description || 'Reach out to Apargo for project enquiries, partnerships, or support. Based in Jaipur, serving clients globally.'
   return {
-    title: content.seo?.title || 'Contact Us — Get in Touch with Apargo',
-    description: content.seo?.description || 'Reach out to Apargo for project enquiries, partnerships, or support. Based in Jaipur, serving clients globally.',
+    title,
+    description,
     keywords: content.seo?.keywords || 'contact, email, address, phone number, support, queries, apargo',
+    alternates: {
+      canonical: '/contact',
+    },
+    openGraph: {
+      title,
+      description,
+      url: '/contact',
+      type: 'website',
+    }
   }
 }
 

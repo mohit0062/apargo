@@ -8,16 +8,42 @@ import CTA from '@/components/shadcn-studio/blocks/cta-section-11/cta-section-11
 import SiteNavbar from '@/components/site-navbar'
 import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer-component-05'
 import { industries } from '@/data/industries'
+import { JsonLd } from '@/components/json-ld'
 
 export const metadata: Metadata = {
   title: 'Industries We Serve — E-commerce, Healthcare, EdTech, FinTech | Apargo',
   description:
     'Apargo builds software for E-commerce, Healthcare, Education, Real Estate, FinTech and Travel businesses. Domain-aware engineering, not generic dev shop work.',
+  alternates: {
+    canonical: '/industries',
+  },
+  openGraph: {
+    title: 'Industries We Serve — E-commerce, Healthcare, EdTech, FinTech | Apargo',
+    description:
+      'Apargo builds software for E-commerce, Healthcare, Education, Real Estate, FinTech and Travel businesses. Domain-aware engineering, not generic dev shop work.',
+    url: '/industries',
+    type: 'website',
+  }
 }
 
 const IndustriesPage = () => {
+  const industriesSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Apargo Innovations Industries Served",
+    "description": "Industries in which Apargo Innovations provides custom software development, mobile apps, and cloud integration solutions.",
+    "numberOfItems": industries.length,
+    "itemListElement": industries.map((ind, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": ind.name,
+      "url": `https://www.apargoinnovations.com${ind.href}`
+    }))
+  }
+
   return (
     <div className='flex min-h-screen flex-col'>
+      <JsonLd data={industriesSchema} />
       <SiteNavbar />
 
       {/* Hero */}

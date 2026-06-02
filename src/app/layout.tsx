@@ -33,7 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const ogImage = seo.ogImage || "/og-image.png"
   const ogSiteName = seo.ogSiteName || "Apargo"
   const twitterCard = seo.twitterCard || "summary_large_image"
-  const canonicalBase = seo.canonicalBase || "https://apargo.com"
+  const canonicalBase = seo.canonicalBase || "https://www.apargoinnovations.com"
   const robots = seo.robots || "index, follow"
 
   const metadata: Metadata = {

@@ -7,7 +7,16 @@ import { JsonLd } from '@/components/json-ld'
 
 export const metadata: Metadata = {
   title: 'Blog — Engineering Notes, AI Experiments & Product Playbooks | Apargo',
-  description: 'Read the latest insights on product engineering, applied artificial intelligence, and software scaling strategy from the Apargo builder team.'
+  description: 'Read the latest insights on product engineering, applied artificial intelligence, and software scaling strategy from the Apargo builder team.',
+  alternates: {
+    canonical: '/blog',
+  },
+  openGraph: {
+    title: 'Blog — Engineering Notes, AI Experiments & Product Playbooks | Apargo',
+    description: 'Read the latest insights on product engineering, applied artificial intelligence, and software scaling strategy from the Apargo builder team.',
+    url: '/blog',
+    type: 'website',
+  }
 }
 
 // Force dynamic rendering to ensure posts are always fresh
