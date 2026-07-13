@@ -24,7 +24,7 @@ export const DEFAULT_FALLBACKS: Record<string, any> = {
     copyright: "Apargo. All rights reserved.",
     logoImageUrl: "/group-2.svg",
     socialLinks: {
-      globe: "https://apargo.com",
+      globe: "https://www.apargoinnovations.com",
       mail: "hello@apargo.com",
       phone: "hello@apargo.com",
       mapPin: "/contact"
@@ -336,7 +336,7 @@ export const DEFAULT_FALLBACKS: Record<string, any> = {
     twitterSite: "",
     twitterCreator: "",
     robots: "index, follow",
-    canonicalBase: "https://apargo.com",
+    canonicalBase: "https://www.apargoinnovations.com",
     googleVerification: "",
     bingVerification: "",
     additionalMetaTags: []

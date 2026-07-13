@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/cron/generate-blog?secret=apargo_cron_secure_token_2026_xyz",
-      "schedule": "30 4 * * *"
+      "schedule": "30 4 */4 * *"
     }
   ]
 }
