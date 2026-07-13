@@ -34,6 +34,7 @@ import {
   LayoutDashboardIcon,
   ShoppingCartIcon
 } from 'lucide-react'
+import { Metadata } from 'next'
 import { Badge } from '@/components/ui/badge'
 import CoMediaLogo from '@/assets/svg/comedia-logo'
 import CompareUILib from '@/components/shadcn-studio/blocks/compare-01/compare-01'
@@ -43,6 +44,21 @@ import GrowLogo from '@/assets/svg/grow-logo'
 import HeroSection from '@/components/shadcn-studio/blocks/hero-section-03/hero-section-03'
 import HiveStudioLogo from '@/assets/svg/hive-studio-logo'
 import type { AvatarItem } from '@/components/shadcn-studio/blocks/hero-section-03/hero-section-03'
+
+export const metadata: Metadata = {
+  title: 'Custom Web Development Services — Next.js & React | Apargo',
+  description: 'Apargo builds fast, scalable web applications and SaaS platforms using Next.js, React, Node.js, and PostgreSQL. Decoupled, performant, and secure.',
+  alternates: {
+    canonical: '/services/web-development',
+  },
+  openGraph: {
+    title: 'Custom Web Development Services — Next.js & React | Apargo',
+    description: 'Apargo builds fast, scalable web applications and SaaS platforms using Next.js, React, Node.js, and PostgreSQL. Decoupled, performant, and secure.',
+    url: '/services/web-development',
+    type: 'website',
+  }
+}
+
 import SiteNavbar from '@/components/site-navbar'
 import Footer from '@/components/shadcn-studio/blocks/footer-component-05/footer-component-05'
 import { getSiteSection, getLucideIcon } from '@/utils/cms'

@@ -44,8 +44,23 @@ import {
   LinkIcon,
   BarChart3Icon
 } from 'lucide-react'
+import { Metadata } from 'next'
 import { Fragment } from 'react'
 import { Badge } from '@/components/ui/badge'
+
+export const metadata: Metadata = {
+  title: 'Mobile App Development Services — iOS & Android Apps | Apargo',
+  description: 'Apargo designs and builds native and cross-platform mobile apps on Swift, Kotlin, and React Native. Custom, reliable, and launch-ready.',
+  alternates: {
+    canonical: '/services/mobile-app-development',
+  },
+  openGraph: {
+    title: 'Mobile App Development Services — iOS & Android Apps | Apargo',
+    description: 'Apargo designs and builds native and cross-platform mobile apps on Swift, Kotlin, and React Native. Custom, reliable, and launch-ready.',
+    url: '/services/mobile-app-development',
+    type: 'website',
+  }
+}
 
 import SiteNavbar from '@/components/site-navbar'
 import { getSiteSection, getLucideIcon } from '@/utils/cms'
